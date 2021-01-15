@@ -15,7 +15,7 @@ return [
     'redis' => [
         'parameters' => [
             'scheme' => 'tcp',
-            'host' => env('redis_hostname', '172.28.1.3'),
+            'host' => env('redis_hostname', '127.0.0.1'),
             'port' => env('redis_port', '6379'),
         ],
         'options' => [

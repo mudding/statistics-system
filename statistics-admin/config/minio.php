@@ -9,6 +9,6 @@ return [
         'secret' => env('minio_secret', 'minioadmin'),
         'region' => env('minio_region', ''),
         'version' => 'latest',
-        'endpoint' => env('minio_endpoint', 'http://172.28.1.3:9000'),
+        'endpoint' => env('minio_endpoint', 'http://127.0.0.1:9000'),
         'bucket' => env('minio_bucket', 'test'),
 ];

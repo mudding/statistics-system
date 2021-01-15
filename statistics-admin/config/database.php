@@ -2,9 +2,9 @@
 /**
  * This file is part of Monda-PHP.
  */
-$host = '172.28.1.57';
-$username = 'php';
-$password = 'monda123';
+$host = '127.0.0.0';
+$username = 'root';
+$password = 'a123456';
 
 return [
     'default' => [

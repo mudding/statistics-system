@@ -1,12 +1,6 @@
 {
-  "name": "mondagroup/monda-php",
-  "description": "盟大框架",
-  "authors": [
-    {
-      "name": "chenzf",
-      "email": "chenzf@pvc123.com"
-    }
-  ],
+  "name": "statistics-system",
+  "description": "statistics-system",
   "require": {
     "php": ">=7.2",
     "mondagroup/monda-php-framework": "dev-master",
