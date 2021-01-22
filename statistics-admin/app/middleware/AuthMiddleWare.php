@@ -7,7 +7,7 @@ namespace app\middleware;
 
 use app\exception\AuthenticationException;
 use app\model\entity\AdminUser;
-use app\modules\admin\dao\system\AdminUserDao;
+use app\modules\admin\dao\AdminUserDao;
 use app\utils\jwt\JwtUtil;
 use framework\cache\CacheFactory;
 use framework\cache\RedisCache;
@@ -55,7 +55,7 @@ class AuthMiddleWare
             /** @var AdminUserDao $AdminUserDao*/
             $AdminUserDao = Loader::singleton(AdminUserDao::class);
             $useId = (new JwtUtil())->parseToken($token, $aud);
-            $user = $AdminUserDao->findDao($useId);
+            $user = $AdminUserDao->findById($useId);
             if (empty($user)) {
                 throw new AuthenticationException('用户不存在，请重新登录!');
             }

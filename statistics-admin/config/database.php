@@ -2,19 +2,19 @@
 /**
  * This file is part of Monda-PHP.
  */
-$host = '127.0.0.0';
+$host = '127.0.0.1';
 $username = 'root';
-$password = 'a123456';
+$password = 'a123456789';
 
 return [
     'default' => [
         'host' => env('db_host', $host),
         'driver' => 'mysql',
-        'database' => 'monda_asset',
+        'database' => 'statistics_system',
         'username' => env('db_username', $username),
-        'password' => env('db_password', $password),
+        'password' => $password ,
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
-        'prefix' => 'asset_',
+        'prefix' => '',
     ]
 ];
