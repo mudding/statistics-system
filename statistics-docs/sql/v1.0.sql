@@ -11,7 +11,7 @@ CREATE TABLE `admin_user` (
     PRIMARY KEY (`id`),
     KEY `key_createdAt` (`created_at`) USING BTREE COMMENT '创建时间索引',
     KEY `key_is_super_admin` (`is_super_admin`) USING BTREE COMMENT '超管索引'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 
 CREATE TABLE `account` (
@@ -33,7 +33,7 @@ CREATE TABLE `account` (
     PRIMARY KEY (`id`),
     KEY `key_createdAt` (`created_at`) USING BTREE COMMENT '时间索引',
     KEY `key_user_id` (`user_id`) USING BTREE COMMENT '用户id'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户表';
 
 
 CREATE TABLE `variety` (
@@ -43,7 +43,7 @@ CREATE TABLE `variety` (
     `created_at` datetime NOT NULL COMMENT '创建时间',
     `updated_at` datetime NOT NULL COMMENT '更新时间',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='交易品种表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='交易品种表';
 
 
 CREATE TABLE `order_log` (
@@ -55,6 +55,7 @@ CREATE TABLE `order_log` (
     `account_id` char(18) NOT NULL COMMENT '关联的账户Id',
     `variety_id` char(18) NOT NULL COMMENT '交易品种Id',
     `max_loss_amount` decimal(18,4)  DEFAULT 0.0000 COMMENT '最大亏损金额(同个订单序号的最大亏损金额)=单条冻结金额',
+    `input_signal_time_id` tinyint(4) DEFAULT 2 COMMENT '入场信号周期id',
     `input_hand_count` decimal(18,4)  DEFAULT 0.0000 COMMENT '手数/仓位(单条)',
     `input_point` decimal(18,4)  DEFAULT 0.0000 COMMENT '入场点数',
     `deposit` decimal(18,4)  DEFAULT 0.0000 COMMENT '保证金',
@@ -73,7 +74,7 @@ CREATE TABLE `order_log` (
     PRIMARY KEY (`id`),
     KEY `key_createdAt` (`created_at`) USING BTREE COMMENT '时间索引',
     KEY `key_no` (`no`) USING BTREE COMMENT '订单序号'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='持单记录表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='持单记录表';
 
 
 CREATE TABLE `complete_order` (
@@ -82,6 +83,7 @@ CREATE TABLE `complete_order` (
     `order_no` int(32) NOT NULL COMMENT '订单序号(初始单/加仓单，同个序号)',
     `account_id` char(18) NOT NULL COMMENT '关联的账户Id',
     `variety_id` char(18) NOT NULL COMMENT '交易品种Id',
+    `input_signal_time_id` tinyint(4) DEFAULT 2 COMMENT '入场信号周期id',
     `max_loss_amount` decimal(18,4)  DEFAULT 0.0000 COMMENT '最大亏损金额',
     `hand_count` decimal(18,4)  DEFAULT 0.0000 COMMENT '总手数/仓位',
     `result` decimal(18,4)  DEFAULT 0.0000 COMMENT '最终平仓所得金额',
@@ -92,8 +94,16 @@ CREATE TABLE `complete_order` (
     PRIMARY KEY (`id`),
     KEY `key_createdAt` (`created_at`) USING BTREE COMMENT '时间索引',
     KEY `key_account_type` (`account_type`) USING BTREE COMMENT '账户类型'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='已完成订单表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='已完成订单表';
 
+
+CREATE TABLE `signal_time` (
+    `id` char(18) NOT NULL COMMENT '主键',
+    `signal_time_name` char(64) NOT NULL COMMENT '周期名称',
+    `created_at` datetime NOT NULL COMMENT '创建时间',
+    `updated_at` datetime NOT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='交易周期表';
 
 
 
