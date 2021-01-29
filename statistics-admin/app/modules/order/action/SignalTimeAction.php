@@ -55,9 +55,7 @@ class SignalTimeAction extends Controller
 
     /**
      * @param $id
-     * @param $name
      * @return Result
-     * @throws \Throwable
      */
     public function delete($id)
     {

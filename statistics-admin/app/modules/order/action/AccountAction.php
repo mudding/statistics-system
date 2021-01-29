@@ -42,6 +42,7 @@ class AccountAction extends Controller
      * @param $id
      * @param $total
      * @return Result
+     * @throws \Throwable
      */
     public function update($id, $total){
         $res = $this->service->updateTotal($id,$total);

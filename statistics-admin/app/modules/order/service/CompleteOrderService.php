@@ -16,7 +16,7 @@ class CompleteOrderService
     private $completeOrderDao;
 
     /**
-     * AdminUserService constructor.
+     * CompleteOrderService constructor.
      */
     public function __construct()
     {

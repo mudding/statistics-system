@@ -20,6 +20,10 @@ class Account extends Model
     public const ACCOUNT_TYPE_SHARES = 3;
     /** @var int 基金 */
     public const ACCOUNT_TYPE_FUND = 4;
+    /** @var int 美股港股 */
+    public const ACCOUNT_TYPE_US_HK_STOCKS = 5;
+    /** @var int 虚拟币 */
+    public const ACCOUNT_TYPE_VIRTUAL_CURRENCY = 6;
 
     /* --- 账户状态  --- */
     /** @var int 持单中 */

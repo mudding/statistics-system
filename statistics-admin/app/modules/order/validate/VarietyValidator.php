@@ -17,29 +17,23 @@ use framework\validate\Validate;
  */
 class VarietyValidator extends Validate
 {
-    //    private $name;
-    //    private $phone;
-    //    private $password;
-    //规则
     protected $rule = [
-        'name' => 'require',
-        'phone' => 'require',
-        'password' => 'require',
+        'id' => 'require',
+        'accountType' => 'require',
+        'varietyName' => 'require',
     ];
 
     //信息
     protected $message = [
-        'name.present' => '请输入昵称',
-        'phone.present' => '请输入手机号码',
-        'password.present' => '请输入密码',
+        'id.present' => '请输入id',
+        'accountType.present' => '请选择账户类型',
+        'varietyName.present' => '请输入交易品种名称',
     ];
 
     //建议方法名称对应
     protected $scene = [
-        'create' => [
-            'name',
-            'phone',
-            'password',
-        ],
+        'create' => ['accountType', 'varietyName'],
+        'update' => ['id', 'accountType', 'varietyName'],
+        'delete' => ['id'],
     ];
 }

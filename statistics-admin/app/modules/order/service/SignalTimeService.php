@@ -17,7 +17,7 @@ class SignalTimeService
     private $signalTimeDao;
 
     /**
-     * AdminUserService constructor.
+     * SignalTimeService constructor.
      */
     public function __construct()
     {
@@ -58,7 +58,11 @@ class SignalTimeService
         return $this->signalTimeDao->update($id, $name);
     }
 
-
+    /**
+     * @param $id
+     * @return bool
+     * @throws \Throwable
+     */
     public function delete($id)
     {
         return $this->signalTimeDao->delete($id);

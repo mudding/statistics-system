@@ -16,7 +16,7 @@ class OrderLogService
     private $orderLogDao;
 
     /**
-     * AdminUserService constructor.
+     * OrderLogService constructor.
      */
     public function __construct()
     {
