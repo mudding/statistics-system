@@ -46,7 +46,7 @@ class LoginAction extends Controller
         if ($decryptPassword !== $adminUser->password) {
             return Result::error()->message('账号或者密码错误,请检查是否填写正确!');
         }
-        $token = (new JwtUtil())->generateCode($adminUser->id, $this->adminConfig['aud'], $this->adminConfig['token_expire_time']);
+        $token = (new JwtUtil())->generateCode($adminUser->getOriginal('id'), $this->adminConfig['aud'], $this->adminConfig['token_expire_time']);
         //更新登录信息
         $adminUserService->updateLoginInfo($adminUser);
         return Result::ok()->data([

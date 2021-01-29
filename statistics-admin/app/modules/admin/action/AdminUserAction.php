@@ -27,6 +27,7 @@ class AdminUserAction extends Controller
     /**
      * @param AdminUserVo $adminUserVo
      * @return Result
+     * @throws \Throwable
      */
     public function create(AdminUserVo $adminUserVo)
     {

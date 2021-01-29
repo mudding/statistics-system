@@ -13,6 +13,11 @@ return [
     //模块名
     'admin' => [
         \app\middleware\WebMiddleWare::class,
+        // \app\middleware\AuthMiddleWare::class,
+    ],
+    //模块名
+    'order' => [
+        \app\middleware\WebMiddleWare::class,
        // \app\middleware\AuthMiddleWare::class,
     ],
 ];

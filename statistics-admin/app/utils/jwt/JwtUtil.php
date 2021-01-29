@@ -3,9 +3,13 @@
 namespace app\utils\jwt;
 
 use app\exception\AuthenticationException;
+use app\middleware\AuthMiddleWare;
+use app\model\entity\AdminUser;
 use Carbon\Carbon;
 use Exception;
 use Firebase\JWT\JWT;
+use framework\cache\CacheFactory;
+use framework\cache\RedisCache;
 use framework\db\Redis;
 use framework\request\RequestInterface;
 use Predis\Client;
@@ -16,13 +20,15 @@ use Predis\Client;
  */
 class JwtUtil
 {
+    /** @var AdminUser $user */
+    protected static $user = null;
 
     /**
      * @param string $loginUserId 登录用户的ID
-     * @param string $aud admin为后端，自定义
-     * @param int $time 以秒为单元
+     * @param string $aud         admin为后端，自定义
+     * @param int    $time        以秒为单元
      * @return string jwt
-     *  生成Code
+     *                            生成Code
      */
     public function generateCode(string $loginUserId, string $aud, int $time): string
     {
@@ -30,7 +36,6 @@ class JwtUtil
         $tokenParam = [
             'id' => $loginUserId,
             'ip' => app(RequestInterface::class)->getClientIp(),
-//            'iss' => 'mondaGroup',
             'aud' => $aud,
             'iat' => time(),
             'exp' => time() + $time,
@@ -40,7 +45,7 @@ class JwtUtil
 
     /**
      * @param string $token 令牌
-     * @param string $aud admin为后端
+     * @param string $aud   admin为后端
      * @return string
      */
     public function parseToken(string $token, string $aud): string
@@ -60,6 +65,19 @@ class JwtUtil
         } catch (Exception $exception) {
             throw new AuthenticationException('登录超时，请重新登录!');
         }
+    }
+
+
+    /**
+     * @return AdminUser
+     * @throws Exception
+     */
+    public static function getLoginUser(): AdminUser
+    {
+        $adminConfig = config('admin');
+//        $token = $_COOKIE['token'] ?? '';
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6IjAxNjAwOTE4YTUwMzgwYzliYyIsImlwIjoiMTI3LjAuMC4xIiwiYXVkIjoiYWRtaW4iLCJpYXQiOjE2MTE3MzMzODksImV4cCI6MTYxMjMzODE4OX0.iyJaNFOULK6aQjc9Xq3dIR0zNkWW0M_cSE42vkwtLVBwXJGGceDCCPBlzUzGohywmSY363_pgJRO1AvYTMFudexcoe7CmpQlwCg7s_BGg0k0aUPqNownHw01LxRN5XPGhFCyJgG5MlC3y1K0HV3hyZ813261dRqktIEzed32Wes';
+        return AuthMiddleWare::getUserByToken($token, $adminConfig['redis_login_user_prefix'], $adminConfig['aud']);
     }
 
 }

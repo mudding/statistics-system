@@ -13,6 +13,7 @@ use framework\util\Loader;
 
 class OrderLogAction extends Controller
 {
+    /** @var OrderLogService $service */
     protected $service;
 
     public function __construct()

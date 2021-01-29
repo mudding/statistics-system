@@ -13,7 +13,7 @@ class Variety extends Model
 {
     protected $primaryKey = 'id';
 
-    protected $table = 'signal_time';
+    protected $table = 'variety';
 
     protected $fillable = [
         'id',

@@ -13,6 +13,7 @@ use framework\util\Loader;
 
 class CompleteOrderAction extends Controller
 {
+    /** @var CompleteOrderService $service */
     protected $service;
 
     public function __construct()

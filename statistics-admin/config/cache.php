@@ -19,7 +19,7 @@ return [
             'port' => env('redis_port', '6379'),
         ],
         'options' => [
-            'prefix' => 'monda:',
+            'prefix' => 'statistics:',
             'parameters' => [
                 'password' => '',
                 'database' => 11,

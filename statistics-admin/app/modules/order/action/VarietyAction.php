@@ -15,7 +15,7 @@ use framework\util\Result;
 
 class VarietyAction extends Controller
 {
-
+    /** @var VarietyService $service */
     protected $service;
 
     public function __construct()

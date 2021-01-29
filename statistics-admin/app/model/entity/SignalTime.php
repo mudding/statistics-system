@@ -13,7 +13,7 @@ class SignalTime extends Model
 {
     protected $primaryKey = 'id';
 
-    protected $table = 'variety';
+    protected $table = 'signal_time';
 
     protected $fillable = [
         'id',
