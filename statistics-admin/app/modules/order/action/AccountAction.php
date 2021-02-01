@@ -29,6 +29,7 @@ class AccountAction extends Controller
         $res = $this->service->getList($accountVo);
         return Result::ok()->data($res);
     }
+
     /**
      * @param AccountVo $accountVo
      * @return Result
