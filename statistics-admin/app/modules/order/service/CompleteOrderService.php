@@ -12,14 +12,14 @@ use framework\util\Loader;
 
 class CompleteOrderService
 {
-    /** @var CompleteOrderDao $completeOrderDao  */
-    private $completeOrderDao;
+    /** @var CompleteOrderDao $dao  */
+    private $dao;
 
     /**
      * CompleteOrderService constructor.
      */
     public function __construct()
     {
-        $this->completeOrderDao = Loader::singleton(CompleteOrderDao::class);
+        $this->dao = Loader::singleton(CompleteOrderDao::class);
     }
 }

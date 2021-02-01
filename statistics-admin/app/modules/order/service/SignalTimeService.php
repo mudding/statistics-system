@@ -13,15 +13,28 @@ use framework\util\Loader;
 
 class SignalTimeService
 {
-    /** @var SignalTimeDao $signalTimeDao */
-    private $signalTimeDao;
+    /** @var SignalTimeDao $dao */
+    private $dao;
 
     /**
      * SignalTimeService constructor.
      */
     public function __construct()
     {
-        $this->signalTimeDao = Loader::singleton(SignalTimeDao::class);
+        $this->dao = Loader::singleton(SignalTimeDao::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function getList()
+    {
+        $data = $this->dao->getData();
+        foreach ($data->items() as $k => $v) {
+            $res[$k]['id'] = $v->getOriginal('id');
+            $res[$k]['signalTimeName'] = $v->signal_time_name;
+        }
+        return $res ?? [];
     }
 
     /**
@@ -30,7 +43,7 @@ class SignalTimeService
      */
     public function getSignalTimeName($name = null)
     {
-        return $this->signalTimeDao->get($name);
+        return $this->dao->getData($name);
     }
 
     /**
@@ -44,7 +57,7 @@ class SignalTimeService
         if ($isData->items()) {
             throw new BizException("该周期已存在！");
         }
-        return $this->signalTimeDao->create($name);
+        return $this->dao->create($name);
     }
 
     /**
@@ -55,7 +68,7 @@ class SignalTimeService
      */
     public function update($id, $name)
     {
-        return $this->signalTimeDao->update($id, $name);
+        return $this->dao->update($id, $name);
     }
 
     /**
@@ -65,7 +78,7 @@ class SignalTimeService
      */
     public function delete($id)
     {
-        return $this->signalTimeDao->delete($id);
+        return $this->dao->delete($id);
     }
 
 }

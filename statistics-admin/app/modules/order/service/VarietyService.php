@@ -13,15 +13,30 @@ use framework\util\Loader;
 
 class VarietyService
 {
-    /** @var VarietyDao $varietyDao */
-    private $varietyDao;
+    /** @var VarietyDao $dao */
+    private $dao;
 
     /**
      * VarietyService constructor.
      */
     public function __construct()
     {
-        $this->varietyDao = Loader::singleton(VarietyDao::class);
+        $this->dao = Loader::singleton(VarietyDao::class);
+    }
+
+    /**
+     * @param $accountType
+     * @return array
+     */
+    public function getList($accountType)
+    {
+        $data = $this->dao->getByAccountType($accountType);
+        foreach ($data->items() as $k => $v) {
+            $res[$k]['id'] = $v->getOriginal('id');
+            $res[$k]['accountType'] = $v->account_type;
+            $res[$k]['varietyName'] = $v->variety_name;
+        }
+        return $res ?? [];
     }
 
     /**
@@ -31,7 +46,7 @@ class VarietyService
      */
     public function getByAccountType($accountType, $varietyName = null)
     {
-        return $this->varietyDao->getByAccountType($accountType, $varietyName);
+        return $this->dao->getByAccountType($accountType, $varietyName);
     }
 
     /**
@@ -46,7 +61,7 @@ class VarietyService
         if ($isData->items()) {
             throw new BizException("该账户类型的交易品种已存在！");
         }
-        return $this->varietyDao->create($accountType, $varietyName);
+        return $this->dao->create($accountType, $varietyName);
     }
 
     /**
@@ -62,7 +77,7 @@ class VarietyService
         if ($isData->items()) {
             throw new BizException("该账户类型的交易品种已存在！");
         }
-        return $this->varietyDao->update($id, $accountType, $varietyName);
+        return $this->dao->update($id, $accountType, $varietyName);
     }
 
     /**
@@ -72,6 +87,6 @@ class VarietyService
      */
     public function delete($id)
     {
-        return $this->varietyDao->delete($id);
+        return $this->dao->delete($id);
     }
 }

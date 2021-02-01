@@ -32,6 +32,7 @@ class VarietyValidator extends Validate
 
     //建议方法名称对应
     protected $scene = [
+        'getList' => ['accountType'],
         'create' => ['accountType', 'varietyName'],
         'update' => ['id', 'accountType', 'varietyName'],
         'delete' => ['id'],

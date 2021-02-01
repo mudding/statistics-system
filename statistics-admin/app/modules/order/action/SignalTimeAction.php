@@ -23,6 +23,12 @@ class SignalTimeAction extends Controller
         $this->service = Loader::service(SignalTimeService::class);
     }
 
+    public function getList()
+    {
+        $res = $this->service->getList();
+        return Result::ok()->data($res);
+    }
+
     /**
      * @param $name
      * @return Result
@@ -31,7 +37,7 @@ class SignalTimeAction extends Controller
     public function create($name)
     {
         $res = $this->service->create($name);
-        if ($res){
+        if ($res) {
             return Result::ok();
         }
         return Result::error();
@@ -46,7 +52,7 @@ class SignalTimeAction extends Controller
     public function update($id, $name)
     {
         $res = $this->service->update($id, $name);
-        if ($res){
+        if ($res) {
             return Result::ok();
         }
         return Result::error();
@@ -56,13 +62,16 @@ class SignalTimeAction extends Controller
     /**
      * @param $id
      * @return Result
+     * @throws \Throwable
      */
     public function delete($id)
     {
         $res = $this->service->delete($id);
-        if ($res){
+        if ($res) {
             return Result::ok();
         }
         return Result::error();
     }
+
+
 }

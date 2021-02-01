@@ -14,15 +14,15 @@ use framework\util\Loader;
 
 class AccountService
 {
-    /** @var AccountDao $accountDao */
-    private $accountDao;
+    /** @var AccountDao $dao */
+    private $dao;
 
     /**
      * AdminUserService constructor.
      */
     public function __construct()
     {
-        $this->accountDao = Loader::singleton(AccountDao::class);
+        $this->dao = Loader::singleton(AccountDao::class);
     }
 
     /**
@@ -32,7 +32,7 @@ class AccountService
      */
     public function getByType(int $type, $no = null)
     {
-        return $this->accountDao->getByType($type, $no);
+        return $this->dao->getByType($type, $no);
     }
 
     /**
@@ -46,7 +46,7 @@ class AccountService
         if ($isData->items()) {
             throw new BizException("该账户类型中的账户已存在！");
         }
-        return $this->accountDao->create($accountVo);
+        return $this->dao->create($accountVo);
     }
 
     /**
@@ -57,7 +57,7 @@ class AccountService
      */
     public function updateTotal(string $id, float $total)
     {
-        return $this->accountDao->updateTotal($id, $total);
+        return $this->dao->updateTotal($id, $total);
     }
 
 }

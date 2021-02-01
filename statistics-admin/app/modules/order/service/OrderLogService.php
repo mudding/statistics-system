@@ -12,15 +12,15 @@ use framework\util\Loader;
 
 class OrderLogService
 {
-    /** @var OrderLogDao $orderLogDao */
-    private $orderLogDao;
+    /** @var OrderLogDao $dao */
+    private $dao;
 
     /**
      * OrderLogService constructor.
      */
     public function __construct()
     {
-        $this->orderLogDao = Loader::singleton(OrderLogDao::class);
+        $this->dao = Loader::singleton(OrderLogDao::class);
     }
 
 }

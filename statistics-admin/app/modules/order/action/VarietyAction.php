@@ -27,6 +27,12 @@ class VarietyAction extends Controller
         $this->service = Loader::service(VarietyService::class);
     }
 
+    public function getList($accountType)
+    {
+        $res = $this->service->getList($accountType);
+        return Result::ok()->data($res);
+    }
+
     /**
      * @param $accountType
      * @param $varietyName

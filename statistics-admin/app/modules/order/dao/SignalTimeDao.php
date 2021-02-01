@@ -18,7 +18,7 @@ class SignalTimeDao
      * @param null $name
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function get($name = null)
+    public function getData($name = null)
     {
         return SignalTime::query()->when(!empty($name), function ($query) use ($name) {
             $query->where('signal_time_name', '=', $name);
