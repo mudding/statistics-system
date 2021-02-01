@@ -10,6 +10,7 @@ namespace app\modules\order\service;
 use app\exception\BizException;
 use app\modules\order\dao\AccountDao;
 use app\modules\order\vo\AccountVo;
+use Carbon\Carbon;
 use framework\util\Loader;
 
 class AccountService
@@ -23,6 +24,29 @@ class AccountService
     public function __construct()
     {
         $this->dao = Loader::singleton(AccountDao::class);
+    }
+
+    /**
+     * @param AccountVo $accountVo
+     * @return array
+     */
+    public function getList(AccountVo $accountVo)
+    {
+        $data = $this->dao->getByType($accountVo->getAccountType(), $accountVo->getAccountNo());
+        foreach ($data->items() as $k => $v) {
+            $res[$k]['id'] = $v->getOriginal('id');
+            $res[$k]['accountType'] = $v->account_type;
+            $res[$k]['accountName'] = $v->account_name;
+            $res[$k]['accountNo'] = $v->account_no;
+            $res[$k]['accountStatus'] = '账户状态实时查询订单日志。空仓';
+            $res[$k]['total'] = $v->total;
+            $res[$k]['balance'] = $v->balance;
+            $res[$k]['frozen'] = $v->frozen;
+            $res[$k]['userName'] = $v->user_name;
+            $res[$k]['createdAt'] = $v->created_at->toDateTimeString();
+            $res[$k]['updatedAt'] = $v->updated_at->toDateTimeString();
+        }
+        return $res ?? [];
     }
 
     /**

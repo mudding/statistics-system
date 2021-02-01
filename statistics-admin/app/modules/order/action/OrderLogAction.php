@@ -21,4 +21,5 @@ class OrderLogAction extends Controller
         parent::__construct();
         $this->service = Loader::service(OrderLogService::class);
     }
+
 }

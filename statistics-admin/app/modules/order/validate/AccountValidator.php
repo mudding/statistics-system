@@ -17,6 +17,7 @@ class AccountValidator extends Validate
 {
     //规则
     protected $rule = [
+        'id' => 'require',
         'accountType' => 'require',
         'accountName' => 'require',
         'accountNo' => 'require',
@@ -25,6 +26,7 @@ class AccountValidator extends Validate
 
     //信息
     protected $message = [
+        'id.present' => '请输入id',
         'accountType.present' => '请选择账户类型',
         'accountName.present' => '请输入账户名称',
         'accountNo.present' => '请输入账户号码',
@@ -34,5 +36,7 @@ class AccountValidator extends Validate
     //建议方法名称对应
     protected $scene = [
         'create' => ['accountType', 'accountName', 'accountNo','total'],
+        'update' => ['id','total'],
+        'getList' => [],
     ];
 }

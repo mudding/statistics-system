@@ -24,6 +24,11 @@ class AccountAction extends Controller
         $this->service = Loader::service(AccountService::class);
     }
 
+    public function getList(AccountVo $accountVo)
+    {
+        $res = $this->service->getList($accountVo);
+        return Result::ok()->data($res);
+    }
     /**
      * @param AccountVo $accountVo
      * @return Result

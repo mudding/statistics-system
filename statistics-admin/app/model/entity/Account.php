@@ -41,7 +41,6 @@ class Account extends Model
         'account_type',
         'account_name',
         'account_no',
-        'account_status',
         'total',
         'balance',
         'frozen',

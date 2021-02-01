@@ -23,6 +23,9 @@ class SignalTimeAction extends Controller
         $this->service = Loader::service(SignalTimeService::class);
     }
 
+    /**
+     * @return Result
+     */
     public function getList()
     {
         $res = $this->service->getList();

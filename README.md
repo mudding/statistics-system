@@ -9,34 +9,15 @@ statistics-system
 由于是本机自用，只需要简单判断密码即可。
 
 -----
-### 统计需要有：
+1. 搭建nginx，配置文件在nginx/statistics.my.conf
+2. 在hosts文件中，新增 statistics.my 域名
+``` sudo vim /etc/hosts ``` 
+3. 拉依赖包。根目录下，打开statistics-admin文件，composer install
+``` cd statistics-admin ``` 
+``` composer install ``` 
+4. 配置本地数据库，sql语句在statistics-docs/sql下。
+--- 注意statistics-admin/config/database.php文件的数据库账户密码跟本机数据库是否匹配 ---
+5. 配置redis，确保本地已安装redis。
+---  配置文件在statistics-admin/config/cache.php --- 
 
-#### 账户状态 
-1.资金使用率=总冻结资金/总资金；
-2.初始金额，浮动总金额，可用余额，冻结金额，目前持单数
-
------
-#### 完成状态订单
-##### 图表形式
-1.总完成订单数，最终金额的盈亏比；
-
-2.查询字段：品种/信号周期/日期/结果 -> 平仓所得资金趋势图
-
-3.信号周期/品种 -> 各占比图；
-
-4.可，根据所选信号周期/品种，胜率比；
-
-5.风控图 
-
-
-#### 订单日志
-##### 图表形式
-1.资金曲线图 - (去本/不去本)
-
-##### 计算
-1.结束单时，计算该单风控，自动生成风控结果
-
-2.单条数据风控工具，计算仓位
-
-3.不同账户类型，不同计算公式
 

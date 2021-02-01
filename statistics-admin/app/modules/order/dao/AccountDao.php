@@ -24,7 +24,7 @@ class AccountDao
     public function getByType(int $type = 0, $no = null)
     {
         return Account::query()->when(isset($no), function ($query) use ($no) {
-            $query->where('account_no', '=', $no);
+            $query->where('account_no', 'like', "%{$no}%");
         })
             ->when(!empty($type), function ($query) use ($type) {
                 $query->where('account_type', '=', $type);
@@ -45,7 +45,6 @@ class AccountDao
             'account_type' => $accountVo->getAccountType(),
             'account_name' => $accountVo->getAccountName(),
             'account_no' => $accountVo->getAccountNo(),
-            'account_status' => Account::ACCOUNT_STATUS_NULL,
             'total' => $accountVo->getTotal(),
             'balance' => $accountVo->getTotal(),
             'frozen' => 0,

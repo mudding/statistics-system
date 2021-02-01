@@ -20,7 +20,6 @@ CREATE TABLE `account` (
     `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=股票,4=基金,5=美股港股,6=虚拟币',
     `account_name` char(64) NOT NULL COMMENT '账户名称',
     `account_no` char(64) NOT NULL COMMENT '账户号码',
-    `account_status` tinyint(4) DEFAULT 2 COMMENT '账户状态(默认空仓),1=持单中,2=空仓',
     `total` decimal(18,2)  DEFAULT 0.00 COMMENT '总金额(浮动)',
     `balance` decimal(18,2)  DEFAULT 0.00 COMMENT '可用余额(浮动)',
     `frozen` decimal(18,2)  DEFAULT 0.00 COMMENT '冻结金额-持单的最大亏损金额汇总(浮动)',
