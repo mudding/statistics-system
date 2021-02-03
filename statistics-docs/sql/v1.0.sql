@@ -17,7 +17,7 @@ CREATE TABLE `admin_user` (
 CREATE TABLE `account` (
     `id` char(18) NOT NULL COMMENT '主键',
     `user_id` char(18) NOT NULL COMMENT '关联的用户id',
-    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=股票,4=基金,5=美股港股,6=虚拟币',
+    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币',
     `account_name` char(64) NOT NULL COMMENT '账户名称',
     `account_no` char(64) NOT NULL COMMENT '账户号码',
     `total` decimal(18,2)  DEFAULT 0.00 COMMENT '总金额(浮动)',
@@ -34,7 +34,7 @@ CREATE TABLE `account` (
 
 CREATE TABLE `variety` (
     `id` char(18) NOT NULL COMMENT '主键',
-    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=股票,4=基金,5=美股港股,6=虚拟币',
+    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币',
     `variety_name` char(64) NOT NULL COMMENT '品种名称',
     `created_at` datetime NOT NULL COMMENT '创建时间',
     `updated_at` datetime NOT NULL COMMENT '更新时间',
@@ -44,7 +44,7 @@ CREATE TABLE `variety` (
 
 CREATE TABLE `order_log` (
     `id` char(18) NOT NULL COMMENT '主键',
-    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=股票,4=基金,5=美股港股,6=虚拟币',
+    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币',
     `no` int(32) NOT NULL COMMENT '订单序号(初始单/加仓单，同个序号)',
     `order_type` tinyint(4) NOT NULL COMMENT '订单类型，1=初始单，2=加仓单',
     `order_status` tinyint(4) DEFAULT 2 COMMENT '订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓,4=计划中,5=计划失败',
@@ -78,7 +78,7 @@ CREATE TABLE `order_log` (
 
 CREATE TABLE `complete_order` (
     `id` char(18) NOT NULL COMMENT '主键',
-    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=股票,4=基金,5=美股港股,6=虚拟币',
+    `account_type` tinyint(4) NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币',
     `order_no` int(32) NOT NULL COMMENT '订单序号(初始单/加仓单，同个序号)',
     `account_id` char(18) NOT NULL COMMENT '关联的账户Id',
     `variety_id` char(18) NOT NULL COMMENT '交易品种Id',

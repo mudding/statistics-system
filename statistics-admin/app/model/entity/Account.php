@@ -16,14 +16,16 @@ class Account extends Model
     public const ACCOUNT_TYPE_MT4 = 1;
     /** @var int 期货 */
     public const ACCOUNT_TYPE_FUTURES = 2;
+    /** @var int 期权 */
+    public const ACCOUNT_TYPE_OPTION = 3;
     /** @var int 股票 */
-    public const ACCOUNT_TYPE_SHARES = 3;
+    public const ACCOUNT_TYPE_SHARES = 4;
     /** @var int 基金 */
-    public const ACCOUNT_TYPE_FUND = 4;
+    public const ACCOUNT_TYPE_FUND = 5;
     /** @var int 美股港股 */
-    public const ACCOUNT_TYPE_US_HK_STOCKS = 5;
+    public const ACCOUNT_TYPE_US_HK_STOCKS = 6;
     /** @var int 虚拟币 */
-    public const ACCOUNT_TYPE_VIRTUAL_CURRENCY = 6;
+    public const ACCOUNT_TYPE_VIRTUAL_CURRENCY = 7;
 
     /* --- 账户状态  --- */
     /** @var int 持单中 */

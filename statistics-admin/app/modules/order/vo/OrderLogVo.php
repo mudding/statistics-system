@@ -9,6 +9,7 @@ namespace app\modules\order\vo;
 
 class OrderLogVo extends BaseVo
 {
+    private $id;
     /** var string 账户类型 @Account  */
     private $accountType;
     /** var string 订单号 */
@@ -44,9 +45,26 @@ class OrderLogVo extends BaseVo
     /** var string 单条平仓所得金额 */
     private $outputAmount;
     /** var string 出场理由 */
-    private $output_reason;
+    private $outputReason;
     /** var string 出场图片 */
     private $outputImages;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
 
     /**
      * @return mixed
@@ -325,15 +343,15 @@ class OrderLogVo extends BaseVo
      */
     public function getOutputReason()
     {
-        return $this->output_reason;
+        return $this->outputReason;
     }
 
     /**
-     * @param mixed $output_reason
+     * @param $outputReason
      */
-    public function setOutputReason($output_reason): void
+    public function setOutputReason($outputReason): void
     {
-        $this->output_reason = $output_reason;
+        $this->outputReason = $outputReason;
     }
 
     /**
