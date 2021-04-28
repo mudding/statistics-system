@@ -10,38 +10,63 @@ namespace app\modules\order\vo;
 use app\modules\order\validate\AccountValidator;
 use framework\vo\RequestVoInterface;
 
-class AccountVo extends BaseVo
+class AccountCreateVo extends BaseVo
 {
-    /** var string 关联的用户id */
-    private $userId;
-    /** var string 账户类型,1=外汇,2=期货,3=股票,4=基金 */
+    /**  string 账户类型,1=外汇,2=期货,3=股票,4=基金 */
     private $accountType;
-    /** var string 账户名称 */
+    /**  string 账户名称 */
     private $accountName;
-    /** var string 账户号码 */
+    /**  string 账户号码 */
     private $accountNo;
-    /** var string 总金额(浮动) */
+    /**  string 总金额(浮动) */
     private $total;
-    /** var string 可用余额(浮动) */
-    private $balance;
-    /** var string 冻结金额-持单的最大亏损金额汇总(浮动) */
-    private $frozen;
+    /**  string 系数 */
+    private $ratio;
+    /** string 额外的倍数 */
+    private $otherMultiple;
+    
+    /**
+     * @return array|string[]
+     */
+    public function valid(): array
+    {
+        // TODO: Implement valid() method.
+        return [AccountValidator::class, 'create'];
+    }
 
     /**
      * @return mixed
      */
-    public function getUserId()
+    public function getOtherMultiple()
     {
-        return $this->userId;
+        return $this->otherMultiple;
     }
 
     /**
-     * @param mixed $userId
+     * @param mixed $otherMultiple
      */
-    public function setUserId($userId): void
+    public function setOtherMultiple($otherMultiple): void
     {
-        $this->userId = $userId;
+        $this->otherMultiple = $otherMultiple;
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getRatio()
+    {
+        return $this->ratio;
+    }
+
+    /**
+     * @param mixed $ratio
+     */
+    public function setRatio($ratio): void
+    {
+        $this->ratio = $ratio;
+    }
+
 
     /**
      * @return mixed
@@ -107,42 +132,5 @@ class AccountVo extends BaseVo
         $this->total = $total;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBalance()
-    {
-        return $this->balance;
-    }
 
-    /**
-     * @param mixed $balance
-     */
-    public function setBalance($balance): void
-    {
-        $this->balance = $balance;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFrozen()
-    {
-        return $this->frozen;
-    }
-
-    /**
-     * @param mixed $frozen
-     */
-    public function setFrozen($frozen): void
-    {
-        $this->frozen = $frozen;
-    }
-
-
-    public function valid(): array
-    {
-        // TODO: Implement valid() method.
-        return [];
-    }
 }

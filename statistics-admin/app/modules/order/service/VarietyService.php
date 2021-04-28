@@ -8,6 +8,7 @@
 namespace app\modules\order\service;
 
 use app\exception\BizException;
+use app\model\entity\Variety;
 use app\modules\order\dao\VarietyDao;
 use framework\util\Loader;
 
@@ -31,8 +32,9 @@ class VarietyService
     public function getList($accountType)
     {
         $data = $this->dao->getByAccountType($accountType);
+        /** @var Variety $v */
         foreach ($data->items() as $k => $v) {
-            $res[$k]['id'] = $v->getOriginal('id');
+            $res[$k]['id'] = $v->id;
             $res[$k]['accountType'] = $v->account_type;
             $res[$k]['varietyName'] = $v->variety_name;
         }

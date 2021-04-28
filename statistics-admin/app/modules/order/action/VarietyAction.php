@@ -8,7 +8,6 @@
 namespace app\modules\order\action;
 
 use app\modules\order\service\VarietyService;
-use app\modules\order\vo\VarietyVo;
 use framework\Controller;
 use framework\util\Loader;
 use framework\util\Result;

@@ -22,6 +22,7 @@ class AccountValidator extends Validate
         'accountName' => 'require',
         'accountNo' => 'require',
         'total' => 'require',
+        'ratio' => 'require|float',
     ];
 
     //信息
@@ -31,12 +32,13 @@ class AccountValidator extends Validate
         'accountName.present' => '请输入账户名称',
         'accountNo.present' => '请输入账户号码',
         'total.present' => '请输入总金额',
+        'ratio.present' => '请输入系数',
     ];
 
     //建议方法名称对应
     protected $scene = [
-        'create' => ['accountType', 'accountName', 'accountNo','total'],
-        'update' => ['id','total'],
+        'create' => ['accountType', 'accountName', 'accountNo', 'total', 'ratio'],
+        'update' => ['id', 'total', 'ratio'],
         'getList' => [],
     ];
 }

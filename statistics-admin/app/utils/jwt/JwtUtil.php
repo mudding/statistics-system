@@ -76,7 +76,7 @@ class JwtUtil
     {
         $adminConfig = config('admin');
 //        $token = $_COOKIE['token'] ?? '';
-        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6IjAxNjAwOTE4YTUwMzgwYzliYyIsImlwIjoiMTI3LjAuMC4xIiwiYXVkIjoiYWRtaW4iLCJpYXQiOjE2MTE3MzMzODksImV4cCI6MTYxMjMzODE4OX0.iyJaNFOULK6aQjc9Xq3dIR0zNkWW0M_cSE42vkwtLVBwXJGGceDCCPBlzUzGohywmSY363_pgJRO1AvYTMFudexcoe7CmpQlwCg7s_BGg0k0aUPqNownHw01LxRN5XPGhFCyJgG5MlC3y1K0HV3hyZ813261dRqktIEzed32Wes';
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6IjAxNjAwOTE4YTUwMzgwYzliYyIsImlwIjoiMTI3LjAuMC4xIiwiYXVkIjoiYWRtaW4iLCJpYXQiOjE2MTk1MDcwMDIsImV4cCI6MTYyMDExMTgwMn0.CRtT4ldR5Gq9hrJvjSAPrayKteCLZX2p41M3XKK1QkvPmw4rytxBJ6CvIrdi1nf9RyJdO7lJhkKgx1_aHADf-GW-Er3tIGA87I6Rph5OT7xWVoinA-UOJZKbRx-3WyUkjjXEaNYHqOzptQSaIpsBptD1iyUEo3VjuiJcK72up8g';
         return AuthMiddleWare::getUserByToken($token, $adminConfig['redis_login_user_prefix'], $adminConfig['aud']);
     }
 

@@ -7,23 +7,19 @@
 
 namespace app\modules\order\vo;
 
-class OrderLogVo extends BaseVo
+use app\modules\order\validate\OrderValidate;
+
+class OrderUpdateVo extends BaseVo
 {
-    private $id;
-    /** var string 账户类型 @Account  */
-    private $accountType;
-    /** var string 订单号 */
-    private $no;
-    /** var string 订单类型，1=初始单，2=加仓单 */
+    private $orderId;
+    /** var string 关联的账户Id */
+    private $accountId;
+    /** var string 订单类型，1=发起单，2=节点单，3=加仓单 */
     private $orderType;
     /** var string 订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓，4=计划中，5=计划失败 */
     private $orderStatus;
-    /** var string 关联的账户Id */
-    private $accountId;
     /** var string 交易品种Id */
     private $varietyId;
-    /** var string 最大亏损金额(冻结金额) */
-    private $maxLossAmount;
     /** var string 入场信号周期id */
     private $inputSignalTimeId;
     /** var string 手数/仓位 */
@@ -32,6 +28,8 @@ class OrderLogVo extends BaseVo
     private $inputPoint;
     /** var string 保证金 */
     private $deposit;
+    /** var string 止损位置 */
+    private $lossPoint;
     /** var string 该仓位止损金额 */
     private $lossAmount;
     /** var string 入场理由  */
@@ -49,53 +47,46 @@ class OrderLogVo extends BaseVo
     /** var string 出场图片 */
     private $outputImages;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
-     * @param mixed $id
+     * @return array|string[]
      */
-    public function setId($id): void
+    public function valid(): array
     {
-        $this->id = $id;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getAccountType()
-    {
-        return $this->accountType;
-    }
-
-    /**
-     * @param mixed $accountType
-     */
-    public function setAccountType($accountType): void
-    {
-        $this->accountType = $accountType;
+        // TODO: Implement valid() method.
+        return [OrderValidate::class, 'update'];
     }
 
     /**
      * @return mixed
      */
-    public function getNo()
+    public function getOrderId()
     {
-        return $this->no;
+        return $this->orderId;
     }
 
     /**
-     * @param mixed $no
+     * @param mixed $orderId
      */
-    public function setNo($no): void
+    public function setOrderId($orderId): void
     {
-        $this->no = $no;
+        $this->orderId = $orderId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAccountId()
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * @param mixed $accountId
+     */
+    public function setAccountId($accountId): void
+    {
+        $this->accountId = $accountId;
     }
 
     /**
@@ -133,22 +124,6 @@ class OrderLogVo extends BaseVo
     /**
      * @return mixed
      */
-    public function getAccountId()
-    {
-        return $this->accountId;
-    }
-
-    /**
-     * @param mixed $accountId
-     */
-    public function setAccountId($accountId): void
-    {
-        $this->accountId = $accountId;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getVarietyId()
     {
         return $this->varietyId;
@@ -160,22 +135,6 @@ class OrderLogVo extends BaseVo
     public function setVarietyId($varietyId): void
     {
         $this->varietyId = $varietyId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMaxLossAmount()
-    {
-        return $this->maxLossAmount;
-    }
-
-    /**
-     * @param mixed $maxLossAmount
-     */
-    public function setMaxLossAmount($maxLossAmount): void
-    {
-        $this->maxLossAmount = $maxLossAmount;
     }
 
     /**
@@ -240,6 +199,22 @@ class OrderLogVo extends BaseVo
     public function setDeposit($deposit): void
     {
         $this->deposit = $deposit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLossPoint()
+    {
+        return $this->lossPoint;
+    }
+
+    /**
+     * @param mixed $lossPoint
+     */
+    public function setLossPoint($lossPoint): void
+    {
+        $this->lossPoint = $lossPoint;
     }
 
     /**
@@ -347,7 +322,7 @@ class OrderLogVo extends BaseVo
     }
 
     /**
-     * @param $outputReason
+     * @param mixed $outputReason
      */
     public function setOutputReason($outputReason): void
     {
@@ -371,8 +346,4 @@ class OrderLogVo extends BaseVo
     }
 
 
-    public function valid(): array
-    {
-        // TODO: Implement valid() method.
-    }
 }

@@ -5,7 +5,8 @@ namespace app\modules\order\dao;
 use app\model\entity\Account;
 use app\model\entity\AdminUser;
 use app\modules\admin\dao\AdminUserDao;
-use app\modules\order\vo\AccountVo;
+use app\modules\order\vo\AccountCreateVo;
+use app\modules\order\vo\AccountUpdateVo;
 use app\utils\jwt\JwtUtil;
 use framework\db\DB;
 use framework\string\StringUtils;
@@ -33,11 +34,11 @@ class AccountDao
     }
 
     /**
-     * @param AccountVo $accountVo
+     * @param AccountCreateVo $accountVo
      * @return bool
      * @throws \Throwable
      */
-    public function create(AccountVo $accountVo)
+    public function create(AccountCreateVo $accountVo)
     {
         $data = [
             'id' => StringUtils::genGlobalUid(),
@@ -47,6 +48,7 @@ class AccountDao
             'account_no' => $accountVo->getAccountNo(),
             'total' => $accountVo->getTotal(),
             'balance' => $accountVo->getTotal(),
+            'ratio' => $accountVo->getRatio(),
             'frozen' => 0,
             'user_name' => JwtUtil::getLoginUser()->getOriginal('name')
         ];
@@ -57,19 +59,26 @@ class AccountDao
     }
 
     /***
-     * @param string $id
-     * @param float  $total
+     * @param AccountUpdateVo $accountVo
      * @return bool
      * @throws \Throwable
      */
-    public function updateTotal(string $id, float $total)
+    public function update(AccountUpdateVo $accountVo)
     {
-        DB::transaction(AdminUserDao::DB_CONNECTION, function () use ($id, $total) {
-            $query = Account::query()->where('id', '=', $id);
-            $query->increment('total', $total);
-            $query->increment('balance', $total);
-            $query->update(['user_name' => JwtUtil::getLoginUser()->getOriginal('name')]);
+        DB::transaction(AdminUserDao::DB_CONNECTION, function () use ($accountVo) {
+            $query = Account::query()->where('id', '=', $accountVo->getId());
+            $query->increment('total', $accountVo->getTotal());
+            $query->increment('balance', $accountVo->getTotal());
+            $query->update([
+                'user_name' => JwtUtil::getLoginUser()->getOriginal('name'),
+                'ratio' => $accountVo->getRatio()
+            ]);
         });
         return true;
+    }
+
+    public function getById($id)
+    {
+        return Account::query()->where('id', $id)->firstOrFail();
     }
 }

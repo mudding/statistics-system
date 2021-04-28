@@ -7,30 +7,35 @@
 
 namespace app\modules\order\action;
 
-use app\modules\order\service\OrderLogService;
-use app\modules\order\vo\OrderLogVo;
+use app\modules\order\service\OrderService;
+use app\modules\order\vo\OrderCreateVo;
 use framework\Controller;
 use framework\util\Loader;
 use framework\util\Result;
 
-class OrderLogAction extends Controller
+class OrderAction extends Controller
 {
-    /** @var OrderLogService $service */
+    /** @var OrderService $service */
     protected $service;
 
     public function __construct()
     {
         parent::__construct();
-        $this->service = Loader::service(OrderLogService::class);
+        $this->service = Loader::service(OrderService::class);
     }
 
-    public function create(OrderLogVo $orderLogVo)
+    public function create(OrderCreateVo $orderLogVo)
     {
         $res = $this->service->create($orderLogVo);
-        if ($res){
+        if ($res) {
             return Result::ok();
         }
         return Result::error();
+    }
+
+    public function getSystemFormula()
+    {
+
     }
 
 }

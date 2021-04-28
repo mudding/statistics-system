@@ -51,3 +51,13 @@ if (! function_exists('tree')) {
         return $tree;
     }
 }
+
+/**
+ * 浮点值乘法
+ */
+if (! function_exists('floatBcuml')) {
+    function floatBcuml($left, $right)
+    {
+        return floatval(bcmul($left, $right, 5));
+    }
+}

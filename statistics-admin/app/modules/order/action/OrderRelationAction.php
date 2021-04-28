@@ -2,23 +2,23 @@
 
 /**
  * @author: mofh <mofh@pvc123.com>
- * @data  : 2021/1/25
+ * @data  : 2021/4/27
  */
 
 namespace app\modules\order\action;
 
-use app\modules\order\service\CompleteOrderService;
+use app\modules\order\service\OrderRelationService;
 use framework\Controller;
 use framework\util\Loader;
 
-class CompleteOrderAction extends Controller
+class OrderRelationAction extends Controller
 {
-    /** @var CompleteOrderService $service */
+    /** @var OrderRelationService $service */
     protected $service;
 
     public function __construct()
     {
         parent::__construct();
-        $this->service = Loader::service(CompleteOrderService::class);
+        $this->service = Loader::service(OrderRelationService::class);
     }
 }

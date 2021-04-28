@@ -24,7 +24,7 @@ use framework\util\Loader;
 class AuthMiddleWare
 {
     /** @var AdminUser $user */
-    protected static $user = null;
+    protected static $user;
 
     /**
      * @param          $request

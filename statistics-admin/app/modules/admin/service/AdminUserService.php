@@ -5,7 +5,6 @@ namespace app\modules\admin\service;
 use app\exception\BizException;
 use app\model\entity\AdminUser;
 use app\modules\admin\dao\AdminUserDao;
-use app\modules\admin\dto\AdminUserDto;
 use app\modules\admin\vo\AdminUserVo;
 use Carbon\Carbon;
 use framework\string\StringUtils;
@@ -59,8 +58,9 @@ class AdminUserService
      */
     public function create(AdminUserVo $adminUserVo)
     {
-        $isData = $this->getUserByPhone($adminUserVo->getPhone());
-        if ($isData) {
+        /** @var AdminUser $adminUser */
+        $adminUser = $this->getUserByPhone($adminUserVo->getPhone());
+        if ($adminUser) {
             throw new BizException("该手机号码已注册！！！请重新输入手机号码");
         }
         $password = makePassword($adminUserVo->getPassword());

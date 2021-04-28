@@ -7,19 +7,19 @@
 
 namespace app\modules\order\service;
 
-use app\modules\order\dao\CompleteOrderDao;
+use app\modules\order\dao\OrderEndDao;
 use framework\util\Loader;
 
-class CompleteOrderService
+class OrderEndService
 {
-    /** @var CompleteOrderDao $dao  */
+    /** @var OrderEndDao $dao  */
     private $dao;
 
     /**
-     * CompleteOrderService constructor.
+     * OrderEndService constructor.
      */
     public function __construct()
     {
-        $this->dao = Loader::singleton(CompleteOrderDao::class);
+        $this->dao = Loader::singleton(OrderEndDao::class);
     }
 }
