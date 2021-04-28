@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 27/04/2021 17:00:38
+ Date: 28/04/2021 17:31:27
 */
 
 SET NAMES utf8mb4;
@@ -57,6 +57,18 @@ CREATE TABLE `admin_user` (
   KEY `key_createdAt` (`created_at`) USING BTREE COMMENT '创建时间索引',
   KEY `key_is_super_admin` (`is_super_admin`) USING BTREE COMMENT '超管索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+-- ----------------------------
+-- Table structure for mood_config
+-- ----------------------------
+DROP TABLE IF EXISTS `mood_config`;
+CREATE TABLE `mood_config` (
+  `id` char(18) NOT NULL,
+  `value` char(255) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for order
@@ -138,6 +150,7 @@ CREATE TABLE `order_end_evaluate` (
   `mood_evaluate` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci COMMENT '情绪评价',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `mood_list` char(255) DEFAULT NULL COMMENT '情绪id列表',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='完成订单的评价表';
 

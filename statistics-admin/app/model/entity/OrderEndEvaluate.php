@@ -27,6 +27,7 @@ use function Symfony\Component\String\s;
  * @property string|NULL $is_normal_point                         手数是否正常，1-是，2-否
  * @property string|NULL $is_free                                 是否自在，1-是，2-否
  * @property string|NULL $mood_evaluate                           情绪评价
+ * @property string|NULL $mood_list                               情绪id
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
  */
@@ -122,6 +123,7 @@ class OrderEndEvaluate extends Model
         'is_normal_point',
         'is_free',
         'mood_evaluate',
+        'mood_list',
         'created_at',
         'updated_at'
     ];
