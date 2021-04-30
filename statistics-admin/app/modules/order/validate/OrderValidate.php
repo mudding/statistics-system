@@ -55,6 +55,6 @@ class OrderValidate extends Validate
     protected $scene = [
         'create' => ['accountId', 'orderType','orderStatus','varietyId','inputSignalTimeId','inputHandCount','inputPoint','deposit','lossAmount','lossPoint','inputReason'],
         'update' => ['id', 'accountId', 'orderType','orderStatus','varietyId','inputSignalTimeId','inputHandCount','inputPoint','deposit','lossAmount','lossPoint','inputReason','outputHandCount','outputPoint','outputAmount','outputReason'],
-        'getSystemFormula' => ['accountId',]
+        'getSystemFormula' => ['accountId','inputPoint'],
         ];
 }

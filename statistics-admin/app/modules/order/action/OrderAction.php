@@ -8,7 +8,9 @@
 namespace app\modules\order\action;
 
 use app\modules\order\service\OrderService;
+use app\modules\order\service\OrderSystemFormulaService;
 use app\modules\order\vo\OrderCreateVo;
+use app\modules\order\vo\OrderSystemFormulaVo;
 use framework\Controller;
 use framework\util\Loader;
 use framework\util\Result;
@@ -33,9 +35,13 @@ class OrderAction extends Controller
         return Result::error();
     }
 
-    public function getSystemFormula()
+    public function getSystemFormula(OrderSystemFormulaVo $systemFormulaVo)
     {
-
+        $systemFormulaVo->checkParameter();
+        /** @var  OrderSystemFormulaService $service */
+        $service = Loader::service(OrderSystemFormulaService::class);
+        $data = $service->getSystemFormula($systemFormulaVo);
+        return Result::ok()->data($data);
     }
 
 }

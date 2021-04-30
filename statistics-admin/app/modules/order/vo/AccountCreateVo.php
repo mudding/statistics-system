@@ -8,7 +8,6 @@
 namespace app\modules\order\vo;
 
 use app\modules\order\validate\AccountValidator;
-use framework\vo\RequestVoInterface;
 
 class AccountCreateVo extends BaseVo
 {
@@ -22,9 +21,7 @@ class AccountCreateVo extends BaseVo
     private $total;
     /**  string 系数 */
     private $ratio;
-    /** string 额外的倍数 */
-    private $otherMultiple;
-    
+
     /**
      * @return array|string[]
      */
@@ -33,23 +30,6 @@ class AccountCreateVo extends BaseVo
         // TODO: Implement valid() method.
         return [AccountValidator::class, 'create'];
     }
-
-    /**
-     * @return mixed
-     */
-    public function getOtherMultiple()
-    {
-        return $this->otherMultiple;
-    }
-
-    /**
-     * @param mixed $otherMultiple
-     */
-    public function setOtherMultiple($otherMultiple): void
-    {
-        $this->otherMultiple = $otherMultiple;
-    }
-
 
     /**
      * @return mixed

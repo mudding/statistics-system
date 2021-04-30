@@ -7,6 +7,7 @@
 
 namespace app\modules\order\service;
 
+use app\exception\BizException;
 use app\model\entity\MoodConfig;
 use app\modules\order\dao\MoodConfigDao;
 use framework\util\Loader;
@@ -26,6 +27,10 @@ class MoodConfigService
 
     public function create($value)
     {
+        $mood = $this->dao->getByValue($value);
+        if (!empty($mood)) {
+            throw  new BizException('该值已存在！');
+        }
         return $this->dao->create($value);
     }
 

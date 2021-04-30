@@ -12,11 +12,11 @@ use framework\vo\RequestVoInterface;
 
 class AccountUpdateVo extends BaseVo
 {
-    /** var string 关联的用户id */
+    /** string 关联的用户id */
     private $id;
-    /** var string 总金额(浮动) */
+    /** string 总金额(浮动) */
     private $total;
-    /** var string 系数 */
+    /** string 系数 */
     private $ratio;
 
     /**

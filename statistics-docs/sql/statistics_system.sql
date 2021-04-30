@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 28/04/2021 17:31:27
+ Date: 30/04/2021 17:08:27
 */
 
 SET NAMES utf8mb4;
@@ -63,12 +63,12 @@ CREATE TABLE `admin_user` (
 -- ----------------------------
 DROP TABLE IF EXISTS `mood_config`;
 CREATE TABLE `mood_config` (
-  `id` char(18) NOT NULL,
-  `value` char(255) NOT NULL,
+  `id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `value` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='交易心态配置表';
 
 -- ----------------------------
 -- Table structure for order

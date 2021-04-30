@@ -13,16 +13,37 @@ use framework\string\StringUtils;
 class MoodConfigDao
 {
 
+    /**
+     * @param $value
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
     public function create($value)
     {
         return MoodConfig::query()->create(['id' => StringUtils::genGlobalUid(), 'value' => $value]);
     }
 
+    /**
+     * @param $id
+     * @param $value
+     * @return int
+     */
     public function update($id, $value)
     {
         return MoodConfig::query()->where('id', $id)->update(['value' => $value]);
     }
 
+    /**
+     * @param $value
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getByValue($value)
+    {
+        return MoodConfig::query()->where('value', $value)->first();
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getList()
     {
         return MoodConfig::query()->paginate();

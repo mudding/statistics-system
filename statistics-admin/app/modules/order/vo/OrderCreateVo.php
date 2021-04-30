@@ -11,29 +11,29 @@ use app\modules\order\validate\OrderValidate;
 
 class OrderCreateVo extends BaseVo
 {
-    /** var string 关联的账户Id */
+    /** string 关联的账户Id */
     private $accountId;
-    /** var string 订单类型，1=发起单，2=节点单，3=加仓单 */
+    /** string 订单类型，1=发起单，2=节点单，3=加仓单 */
     private $orderType;
-    /** var string 订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓，4=计划中，5=计划失败 */
+    /** string 订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓，4=计划中，5=计划失败 */
     private $orderStatus;
-    /** var string 交易品种Id */
+    /** string 交易品种Id */
     private $varietyId;
-    /** var string 入场信号周期id */
+    /** string 入场信号周期id */
     private $inputSignalTimeId;
-    /** var string 手数/仓位 */
+    /** string 手数/仓位 */
     private $inputHandCount;
-    /** var string 入场点数 */
+    /** string 入场点数 */
     private $inputPoint;
-    /** var string 保证金 */
+    /** string 保证金 */
     private $deposit;
-    /** var string 止损位置 */
+    /** string 止损位置 */
     private $lossPoint;
-    /** var string 该仓位止损金额 */
+    /** string 该仓位止损金额 */
     private $lossAmount;
-    /** var string 入场理由  */
+    /** string 入场理由  */
     private $inputReason;
-    /** var string 入场图片 */
+    /** string 入场图片 */
     private $inputImages;
 
     /**
