@@ -7,10 +7,12 @@
 
 namespace app\modules\order\action;
 
+use app\model\entity\Account;
 use app\modules\order\service\AccountService;
 use app\modules\order\vo\AccountCreateVo;
 use app\modules\order\vo\AccountUpdateVo;
 use framework\Controller;
+use framework\request\RequestInterface;
 use framework\util\Loader;
 use framework\util\Result;
 
@@ -19,6 +21,9 @@ class AccountAction extends Controller
     /** @var AccountService $service */
     protected $service;
 
+    /**
+     * AccountAction constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -26,14 +31,16 @@ class AccountAction extends Controller
     }
 
     /**
-     * @param $accountType
-     * @param $accountNo
+     * @param RequestInterface $request
      * @return Result
      */
-    public function getList($accountType, $accountNo)
+    public function getList(RequestInterface $request)
     {
+        $accountType = $request->getParameter('accountType');
+        $accountNo = $request->getParameter('accountNo');
         $res = $this->service->getList($accountType, $accountNo);
-        return Result::ok()->data($res);
+        $extra['accountType'] = Account::ACCOUNT_TYPE;
+        return Result::ok()->data($res)->extra($extra);
     }
 
     /**
@@ -64,6 +71,10 @@ class AccountAction extends Controller
         return Result::error();
     }
 
+    /**
+     * @param $accountId
+     * @return Result
+     */
     public function getMaxLossAmount($accountId)
     {
         $res = $this->service->getMaxLossAmount($accountId);

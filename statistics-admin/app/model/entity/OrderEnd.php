@@ -24,7 +24,6 @@ use framework\db\Model;
  * @property string|NULL    $max_loss_amount               最大亏损金额
  * @property string|NULL    $hand_count                    总手数/仓位
  * @property string|NULL    $result_amount                 最终平仓所得金额
- * @property string|NULL    $user_name                     操作人
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -51,7 +50,6 @@ class OrderEnd extends Model
         'max_loss_amount',
         'hand_count',
         'result_amount',
-        'user_name',
         'created_at',
         'updated_at'
     ];

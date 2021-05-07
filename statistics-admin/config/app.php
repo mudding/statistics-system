@@ -13,6 +13,6 @@ return [
     //用于生成安全cookie
     'app_key' => env('app_key', ''),
     //应用名称app.php
-    'app_name' => env('app_name', 'statistics-system'),
+    'app_name' => env('app_name', 'statistics-systemformula'),
 
 ];

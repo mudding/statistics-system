@@ -53,6 +53,36 @@ if (! function_exists('tree')) {
 }
 
 /**
+ * 浮点值加法
+ */
+if (! function_exists('floatBcadd')) {
+    function floatBcadd($left, $right)
+    {
+        return floatval(bcadd($left, $right, 5));
+    }
+}
+
+/**
+ * 浮点值减法
+ */
+if (! function_exists('floatBcsub')) {
+    function floatBcsub($left, $right)
+    {
+        return floatval(bcsub($left, $right, 5));
+    }
+}
+
+/**
+ * 浮点值除法
+ */
+if (! function_exists('floatBcdiv')) {
+    function floatBcdiv($left, $right)
+    {
+        return floatval(bcdiv($left, $right, 5));
+    }
+}
+
+/**
  * 浮点值乘法
  */
 if (! function_exists('floatBcuml')) {
@@ -61,3 +91,5 @@ if (! function_exists('floatBcuml')) {
         return floatval(bcmul($left, $right, 5));
     }
 }
+
+

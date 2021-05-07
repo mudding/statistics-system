@@ -16,7 +16,7 @@ use framework\db\Model;
  * @package app\model\entity
  * @property string|NULL $id
  * @property string|NULL $user_id       关联的用户id
- * @property string|NULL $account_type  账户类型,1=外汇,2=期货,3=股票,4=基金
+ * @property string|NULL $account_type  账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币
  * @property string|NULL $account_name  账户名称
  * @property string|NULL $account_no    账户号码
  * @property string|NULL $total         总金额(浮动)
@@ -32,25 +32,38 @@ class Account extends Model
 {
     /* --- 账户类型  --- */
     /** @var int 外汇 */
-    public const ACCOUNT_TYPE_MT4 = 1;
+    const ACCOUNT_TYPE_FOREIGN_EXCHANGE = 1;
     /** @var int 期货 */
-    public const ACCOUNT_TYPE_FUTURES = 2;
+    const ACCOUNT_TYPE_FUTURES = 2;
     /** @var int 期权 */
-    public const ACCOUNT_TYPE_OPTION = 3;
+    const ACCOUNT_TYPE_OPTION = 3;
     /** @var int 股票 */
-    public const ACCOUNT_TYPE_SHARES = 4;
+    const ACCOUNT_TYPE_SHARES = 4;
     /** @var int 基金 */
-    public const ACCOUNT_TYPE_FUND = 5;
+    const ACCOUNT_TYPE_FUND = 5;
     /** @var int 美股港股 */
-    public const ACCOUNT_TYPE_US_HK_STOCKS = 6;
+    const ACCOUNT_TYPE_US_HK_STOCKS = 6;
     /** @var int 虚拟币 */
-    public const ACCOUNT_TYPE_VIRTUAL_CURRENCY = 7;
+    const ACCOUNT_TYPE_VIRTUAL_CURRENCY = 7;
+    const ACCOUNT_TYPE = [
+        self::ACCOUNT_TYPE_FOREIGN_EXCHANGE => '外汇',
+        self::ACCOUNT_TYPE_FUTURES => '期货',
+        self::ACCOUNT_TYPE_OPTION => '期权',
+        self::ACCOUNT_TYPE_SHARES => '股票',
+        self::ACCOUNT_TYPE_FUND => '基金',
+        self::ACCOUNT_TYPE_US_HK_STOCKS => '美股港股',
+        self::ACCOUNT_TYPE_VIRTUAL_CURRENCY => '虚拟币',
+    ];
 
     /* --- 账户状态  --- */
     /** @var int 持单中 */
     public const ACCOUNT_STATUS_ING = 1;
     /** @var int 空仓 */
     public const ACCOUNT_STATUS_NULL = 2;
+    const ACCOUNT_STATUS = [
+        self::ACCOUNT_STATUS_ING => '持单中',
+        self::ACCOUNT_STATUS_NULL => '空仓',
+    ];
 
     protected $primaryKey = 'id';
 

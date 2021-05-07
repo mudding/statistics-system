@@ -1,16 +1,16 @@
 <?php
-namespace app\utils\system;
+namespace app\utils\systemformula;
 
 use app\model\entity\Account;
 use app\modules\order\vo\OrderSystemFormulaVo;
-use app\utils\system\impl\FundImpl;
-use app\utils\system\impl\FuturesImpl;
-use app\utils\system\impl\Mt4Impl;
-use app\utils\system\impl\OptionImpl;
-use app\utils\system\impl\SharesImpl;
-use app\utils\system\impl\UsHkStocksImpl;
-use app\utils\system\impl\VirtualCurrencyImpl;
-use app\utils\system\interfaces\ISystemFormula;
+use app\utils\systemformula\impl\ForeignExchangeImpl;
+use app\utils\systemformula\impl\FundImpl;
+use app\utils\systemformula\impl\FuturesImpl;
+use app\utils\systemformula\impl\OptionImpl;
+use app\utils\systemformula\impl\SharesImpl;
+use app\utils\systemformula\impl\UsHkStocksImpl;
+use app\utils\systemformula\impl\VirtualCurrencyImpl;
+use app\utils\systemformula\interfaces\ISystemFormula;
 
 /**
  * @author: mofh <mofh@pvc123.com>
@@ -23,8 +23,8 @@ class SystemFormula implements ISystemFormula
     {
         // TODO: Implement start() method.
         switch ($accountType) {
-            case Account::ACCOUNT_TYPE_MT4 :
-                $value = Mt4Impl::compute($systemFormulaVo);
+            case Account::ACCOUNT_TYPE_FOREIGN_EXCHANGE :
+                $value = ForeignExchangeImpl::compute($systemFormulaVo);
                 break;
             case Account::ACCOUNT_TYPE_FUTURES :
                 $value = FuturesImpl::compute($systemFormulaVo);
@@ -48,6 +48,6 @@ class SystemFormula implements ISystemFormula
                 $value = 0;
                 break;
         }
-        return $value;
+        return abs($value);
     }
 }

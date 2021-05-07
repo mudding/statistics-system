@@ -40,9 +40,10 @@ class AccountService
         foreach ($data->items() as $k => $v) {
             $res[$k]['id'] = $v->getOriginal('id');
             $res[$k]['accountType'] = $v->account_type;
+            $res[$k]['accountTypeName'] = Account::ACCOUNT_TYPE[$v->account_type];
             $res[$k]['accountName'] = $v->account_name;
             $res[$k]['accountNo'] = $v->account_no;
-            $res[$k]['accountStatus'] = '账户状态实时查询订单日志。空仓';
+            $res[$k]['accountStatus'] = $this->getAccountStatus($v->getOriginal('id'));
             $res[$k]['total'] = $v->total;
             $res[$k]['balance'] = $v->balance;
             $res[$k]['frozen'] = $v->frozen;
@@ -55,14 +56,9 @@ class AccountService
         return $res ?? [];
     }
 
-    /**
-     * @param int  $type
-     * @param null $no
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getByType(int $type, $no = null)
+    public function getAccountStatus($accountId)
     {
-        return $this->dao->getByType($type, $no);
+        return '账户状态实时查询订单日志。空仓';
     }
 
     /**
@@ -72,8 +68,8 @@ class AccountService
      */
     public function create(AccountCreateVo $accountVo)
     {
-        $isData = $this->getByType($accountVo->getAccountType(), $accountVo->getAccountNo());
-        if ($isData->items()) {
+        $checkData = $this->dao->getByType($accountVo->getAccountType(), $accountVo->getAccountNo());
+        if ($checkData->items()) {
             throw new BizException("该账户类型中的账户已存在！");
         }
         return $this->dao->create($accountVo);
@@ -96,7 +92,7 @@ class AccountService
     public function getMaxLossAmount($accountId)
     {
         /** @var Account $data */
-        $data = $this->dao->getById($accountId);
+        $data = AccountDao::getById($accountId);
         return floatBcuml($data->balance, $data->ratio);
     }
 

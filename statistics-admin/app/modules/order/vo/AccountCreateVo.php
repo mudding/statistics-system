@@ -11,7 +11,7 @@ use app\modules\order\validate\AccountValidator;
 
 class AccountCreateVo extends BaseVo
 {
-    /**  string 账户类型,1=外汇,2=期货,3=股票,4=基金 */
+    /**  string 账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币 */
     private $accountType;
     /**  string 账户名称 */
     private $accountName;

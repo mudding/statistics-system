@@ -1,17 +1,17 @@
 <?php
 
-namespace app\utils\system\impl;
+namespace app\utils\systemformula\impl;
 
 use app\modules\order\vo\OrderSystemFormulaVo;
-use app\utils\system\interfaces\ISystemCompute;
+use app\utils\systemformula\interfaces\ISystemCompute;
 
 /**
- * 期权
+ * 美股港股
  *
  * @author: mofh <mofh@pvc123.com>
  * @data  : 2021/4/30
  */
-class OptionImpl implements ISystemCompute
+class UsHkStocksImpl implements ISystemCompute
 {
     public static function compute(OrderSystemFormulaVo $systemFormulaVo)
     {

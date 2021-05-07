@@ -18,13 +18,13 @@ use framework\string\StringUtils;
 class AccountDao
 {
     /**
-     * @param int  $type
+     * @param null $type
      * @param null $no
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getByType(int $type = 0, $no = null)
+    public function getByType($type = null, $no = null)
     {
-        return Account::query()->when(isset($no), function ($query) use ($no) {
+        return Account::query()->when(!empty($no), function ($query) use ($no) {
             $query->where('account_no', 'like', "%{$no}%");
         })
             ->when(!empty($type), function ($query) use ($type) {
@@ -77,7 +77,11 @@ class AccountDao
         return true;
     }
 
-    public function getById($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
+    public static function getById($id)
     {
         return Account::query()->where('id', $id)->firstOrFail();
     }

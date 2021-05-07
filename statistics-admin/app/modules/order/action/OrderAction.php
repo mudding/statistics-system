@@ -26,6 +26,7 @@ class OrderAction extends Controller
         $this->service = Loader::service(OrderService::class);
     }
 
+
     public function create(OrderCreateVo $orderLogVo)
     {
         $res = $this->service->create($orderLogVo);
@@ -35,9 +36,13 @@ class OrderAction extends Controller
         return Result::error();
     }
 
+    /**
+     * @param OrderSystemFormulaVo $systemFormulaVo
+     * @return Result
+     */
     public function getSystemFormula(OrderSystemFormulaVo $systemFormulaVo)
     {
-        $systemFormulaVo->checkParameter();
+        $systemFormulaVo->checkNotEmpty();
         /** @var  OrderSystemFormulaService $service */
         $service = Loader::service(OrderSystemFormulaService::class);
         $data = $service->getSystemFormula($systemFormulaVo);

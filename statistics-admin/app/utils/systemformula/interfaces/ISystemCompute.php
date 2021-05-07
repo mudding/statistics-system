@@ -1,6 +1,6 @@
 <?php
 
-namespace app\utils\system\interfaces;
+namespace app\utils\systemformula\interfaces;
 
 use app\modules\order\vo\OrderSystemFormulaVo;
 

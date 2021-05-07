@@ -16,7 +16,7 @@ class OrderSystemFormulaVo extends BaseVo
     private $accountId;
     /**  string 手数/仓位 */
     private $inputHandCount;
-    /**  string 入场点数 */
+    /**  string 入场位置 */
     private $inputPoint;
     /**  string 保证金 */
     private $deposit;
@@ -24,8 +24,12 @@ class OrderSystemFormulaVo extends BaseVo
     private $lossPoint;
     /**  string 该仓位止损金额 */
     private $lossAmount;
-    /** string 额外的倍数 */
+    /** string 额外的倍数(合约数量，用于计算) */
     private $otherMultiple;
+    /** @var $maxLossAmount float 单笔最大亏损金额(程序计算赋值) */
+    private $maxLossAmount;
+    /** @var $balance float 可用余额(程序计算赋值) */
+    private $balance;
 
     public function valid(): array
     {
@@ -33,11 +37,29 @@ class OrderSystemFormulaVo extends BaseVo
         return [OrderValidate::class, 'getSystemFormula'];
     }
 
-
-    public function checkParameter()
+    public function checkNotEmpty()
     {
         if (empty($this->inputHandCount) && empty($this->lossPoint)) {
-            throw new BizException('下单手数，止损点位不能同时为空');
+            throw new BizException('下单手数，止损位置不能同时为空');
+        }
+    }
+
+    public function checkLossAmount()
+    {
+        // 止损金额为空时，设置为单笔最大止损金额
+        if (empty($this->getLossAmount())) {
+            $this->setLossAmount($this->getMaxLossAmount());
+        } else {
+            if ($this->getMaxLossAmount() < $this->getLossAmount()) {
+                throw new BizException('仓位亏损金额不能大于单笔最大亏损金额！');
+            }
+        }
+    }
+
+    public function checkDeposit()
+    {
+        if (empty($this->getDeposit())) {
+            throw new BizException('保证金不能为空');
         }
     }
 
@@ -151,6 +173,38 @@ class OrderSystemFormulaVo extends BaseVo
     public function setOtherMultiple($otherMultiple): void
     {
         $this->otherMultiple = $otherMultiple;
+    }
+
+    /**
+     * @return float
+     */
+    public function getMaxLossAmount(): float
+    {
+        return $this->maxLossAmount;
+    }
+
+    /**
+     * @param float $maxLossAmount
+     */
+    public function setMaxLossAmount(float $maxLossAmount): void
+    {
+        $this->maxLossAmount = $maxLossAmount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBalance(): float
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param float $balance
+     */
+    public function setBalance(float $balance): void
+    {
+        $this->balance = $balance;
     }
 
 

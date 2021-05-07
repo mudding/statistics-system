@@ -16,9 +16,9 @@ use framework\db\Model;
  * @package app\model\entity
  * @property string|NULL $id
  * @property string|NULL $account_id           关联的账户Id
- * @property string|NULL $account_type         账户类型,1=外汇,2=期货,3=股票,4=基金
+ * @property string|NULL $account_type         账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币
  * @property string|NULL $no                   订单序号(初始单/加仓单，同个序号)
- * @property string|NULL $order_type           订单类型，1=发起单，2=节点单，3=加仓单(一次一条)
+ * @property string|NULL $order_type           订单类型，1=发起单，2=节点单，3=加仓单(一次一条),4=游击战
  * @property string|NULL $order_status         订单状态,1=持单中,2=已平部分,3=该条数据全部平仓,4=计划中,5=计划失败
  * @property string|NULL $variety_id           交易品种Id
  * @property string|NULL $max_loss_amount      最大亏损金额(同个订单序号的最大亏损金额)
@@ -39,7 +39,6 @@ use framework\db\Model;
  * @property string|NULL $total                总金额
  * @property string|NULL $balance              可用余额
  * @property string|NULL $frozen               冻结金额
- * @property string|NULL $user_name            操作人
  * @property Carbon      $created_at
  * @property Carbon      $updated_at
  */
@@ -52,10 +51,13 @@ class Order extends Model
     public const ORDER_TYPE_NODE = 2;
     /** @var int 加仓单 */
     public const ORDER_TYPE_ADD = 3;
+    /** @var int 游击战单 */
+    public const ORDER_TYPE_GUERRILLA_WAR = 4;
     const ORDER_TYPE = [
         self::ORDER_TYPE_START => '发起单',
         self::ORDER_TYPE_NODE => '节点单',
         self::ORDER_TYPE_ADD => '加仓单',
+        self::ORDER_TYPE_GUERRILLA_WAR => '游击战单'
     ];
 
     /* --- 账户状态  --- */
@@ -107,7 +109,6 @@ class Order extends Model
         'total',
         'balance',
         'frozen',
-        'user_name',
         'created_at',
         'updated_at'
     ];

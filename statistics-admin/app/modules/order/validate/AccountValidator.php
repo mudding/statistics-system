@@ -39,6 +39,5 @@ class AccountValidator extends Validate
     protected $scene = [
         'create' => ['accountType', 'accountName', 'accountNo', 'total', 'ratio'],
         'update' => ['id', 'total', 'ratio'],
-        'getList' => [],
     ];
 }

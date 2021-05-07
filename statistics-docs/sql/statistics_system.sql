@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 30/04/2021 17:08:27
+ Date: 07/05/2021 17:25:39
 */
 
 SET NAMES utf8mb4;
@@ -76,7 +76,7 @@ CREATE TABLE `mood_config` (
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `id` char(18) NOT NULL COMMENT '主键',
-  `account_type` tinyint NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=股票,4=基金',
+  `account_type` tinyint NOT NULL COMMENT '账户类型,1=外汇,2=期货,3=期权,4=股票,5=基金,6=美股港股,7=虚拟币',
   `no` char(64) NOT NULL COMMENT '订单序号(初始单/加仓单，同个序号)',
   `order_type` tinyint NOT NULL COMMENT '订单类型，1=初始单，2=加仓单',
   `order_status` tinyint DEFAULT '2' COMMENT '订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓,4=计划中,5=计划失败',
@@ -100,7 +100,6 @@ CREATE TABLE `order` (
   `total` decimal(18,2) DEFAULT '0.00' COMMENT '总金额',
   `balance` decimal(18,2) DEFAULT '0.00' COMMENT '可用余额',
   `frozen` decimal(18,2) DEFAULT '0.00' COMMENT '冻结金额',
-  `user_name` varchar(32) DEFAULT NULL COMMENT '操作人',
   `created_at` datetime NOT NULL COMMENT '创建时间',
   `updated_at` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
@@ -123,7 +122,6 @@ CREATE TABLE `order_end` (
   `max_loss_amount` decimal(18,5) DEFAULT '0.00000' COMMENT '最大亏损金额',
   `hand_count` decimal(18,5) DEFAULT '0.00000' COMMENT '总手数/仓位',
   `result_amount` decimal(18,5) DEFAULT '0.00000' COMMENT '最终平仓所得金额',
-  `user_name` varchar(32) DEFAULT NULL COMMENT '操作人',
   `created_at` datetime NOT NULL COMMENT '创建时间',
   `updated_at` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
@@ -162,8 +160,8 @@ CREATE TABLE `order_relation` (
   `id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `order_id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '发起单/节点单id',
   `order_no` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单号',
-  `order_add_id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '加仓单id',
-  `order_add_no` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '加仓单号',
+  `order_add_id` char(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '加仓单id',
+  `order_add_no` char(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '加仓单号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单关联表';
 
