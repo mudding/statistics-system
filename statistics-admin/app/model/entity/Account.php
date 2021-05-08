@@ -56,14 +56,11 @@ class Account extends Model
     ];
 
     /* --- 账户状态  --- */
-    /** @var int 持单中 */
-    public const ACCOUNT_STATUS_ING = 1;
-    /** @var int 空仓 */
-    public const ACCOUNT_STATUS_NULL = 2;
-    const ACCOUNT_STATUS = [
-        self::ACCOUNT_STATUS_ING => '持单中',
-        self::ACCOUNT_STATUS_NULL => '空仓',
-    ];
+    /** @var int 账户状态-持单中 */
+    public const ACCOUNT_STATUS_ING = '持单中';
+    /** @var int 账户状态-空仓 */
+    public const ACCOUNT_STATUS_NULL = '空仓';
+
 
     protected $primaryKey = 'id';
 

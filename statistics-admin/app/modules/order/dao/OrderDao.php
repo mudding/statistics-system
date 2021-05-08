@@ -43,4 +43,11 @@ class OrderDao
             'frozen',
         ]);
     }
+
+    public static function searchOrderByAccountId($accountId)
+    {
+        return Order::query()->where('account_id', $accountId)
+            ->whereIn('order_status', [Order::ORDER_STATUS_ING, Order::ORDER_STATUS_CLOSE_SOME])
+            ->paginate();
+    }
 }

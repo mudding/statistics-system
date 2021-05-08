@@ -10,6 +10,7 @@ namespace app\modules\order\service;
 use app\exception\BizException;
 use app\model\entity\Account;
 use app\modules\order\dao\AccountDao;
+use app\modules\order\dao\OrderDao;
 use app\modules\order\vo\AccountCreateVo;
 use app\modules\order\vo\AccountUpdateVo;
 use Carbon\Carbon;
@@ -56,9 +57,16 @@ class AccountService
         return $res ?? [];
     }
 
+    /**
+     * 实时查询账户状态
+     *
+     * @param $accountId
+     * @return int|string
+     */
     public function getAccountStatus($accountId)
     {
-        return '账户状态实时查询订单日志。空仓';
+        $orderList = OrderDao::searchOrderByAccountId($accountId);
+        return empty($orderList->items()) ? Account::ACCOUNT_STATUS_NULL : Account::ACCOUNT_STATUS_ING;
     }
 
     /**
