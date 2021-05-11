@@ -9,10 +9,13 @@ namespace app\modules\order\service;
 
 use app\model\entity\Account;
 use app\model\entity\Order;
+use app\model\entity\OrderRelation;
 use app\modules\order\dao\AccountDao;
 use app\modules\order\dao\OrderDao;
+use app\modules\order\dao\OrderRelationDao;
 use app\modules\order\vo\OrderCreateVo;
 use app\utils\order\OrderHelper;
+use framework\db\DB;
 use framework\string\StringUtils;
 use framework\util\Loader;
 
@@ -33,18 +36,22 @@ class OrderService
     {
         /** @var Account $account */
         $account = AccountDao::getById($createVo->getAccountId());
-        $createVo->setAccountType($account->account_type);
-        $orderId = StringUtils::genGlobalUid();
-        $createVo->setOrderId($orderId);
-        $orderNo = OrderHelper::generateNumber($createVo->getOrderType());
-        $createVo->setOrderNo($orderNo);
-        //加仓单时，关联表要新增
-        if ($createVo->getOrderType() == Order::ORDER_TYPE_ADD) {
-            $createVo->checkOrderAdd();
-        }
-        //账户状态要更新
-        $account->
-        $this->dao->create($createVo);
+        $createVo->setId(StringUtils::genGlobalUid());
+        $createVo->setNo(OrderHelper::generateNumber($createVo->getOrderType()));
+        $createVo->setMaxLossAmount(floatBcuml($account->balance, $account->ratio));
+        DB::transaction('default', function () use ($createVo) {
+            //加仓单时，关联表要新增
+            if ($createVo->getOrderType() == Order::ORDER_TYPE_ADD) {
+                $createVo->checkOrderAddParameter();
+                OrderRelationDao::create($createVo->getOrderPid(),
+                    $createVo->getOrderPno(),
+                    $createVo->getId(),
+                    $createVo->getNo());
+            }
+            //处理账户的资金
+            $this->dao->create($createVo);
+        });
+        return true;
     }
 
 }

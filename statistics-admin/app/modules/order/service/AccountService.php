@@ -99,9 +99,9 @@ class AccountService
      */
     public function getMaxLossAmount($accountId)
     {
-        /** @var Account $data */
-        $data = AccountDao::getById($accountId);
-        return floatBcuml($data->balance, $data->ratio);
+        /** @var Account $account */
+        $account = AccountDao::getById($accountId);
+        return floatBcuml($account->balance, $account->ratio);
     }
 
 

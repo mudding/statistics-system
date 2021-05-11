@@ -7,40 +7,39 @@
 
 namespace app\modules\order\dao;
 
+use app\model\entity\Account;
 use app\model\entity\Order;
 use app\modules\order\vo\OrderCreateVo;
 
 class OrderDao
 {
 
+    /**
+     * @param OrderCreateVo $createVo
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
     public function create(OrderCreateVo $createVo)
     {
         return Order::query()->create([
-            'id' => $createVo->getOrderId(),
-            'no' => $createVo->getOrderNo(),
+            'id' => $createVo->getId(),
+            'no' => $createVo->getNo(),
             'account_id' => $createVo->getAccountId(),
             'account_type' => $createVo->getAccountType(),
-            'order_type',
-            'order_status',
-            'variety_id',
-            'max_loss_amount',
-            'input_signal_time_id',
-            'input_hand_count',
-            'input_point',
-            'deposit',
-            'loss_point',
-            'loss_amount',
-            'input_reason',
-            'input_images',
-            'output_hand_count',
-            'output_point',
-            'output_amount',
-            'output_log',
-            'output_reason',
-            'output_images',
-            'total',
-            'balance',
-            'frozen',
+            'order_type' => $createVo->getOrderType(),
+            'order_status' => $createVo->getOrderStatus(),
+            'variety_id' => $createVo->getVarietyId(),
+            'input_signal_time_id' => $createVo->getInputSignalTimeId(),
+            'input_hand_count' => $createVo->getInputHandCount(),
+            'input_point' => $createVo->getInputPoint(),
+            'deposit' => $createVo->getDeposit(),
+            'loss_point' => $createVo->getLossPoint(),
+            'loss_amount' => $createVo->getLossAmount(),
+            'input_reason' => $createVo->getInputReason(),
+            'input_images' => $createVo->getInputImages(),
+            'max_loss_amount' => $createVo->getMaxLossAmount(),
+            'total' => $createVo->getTotal(),
+            'balance' => $createVo->getBalance(),
+            'frozen' => $createVo->getFrozen(),
         ]);
     }
 

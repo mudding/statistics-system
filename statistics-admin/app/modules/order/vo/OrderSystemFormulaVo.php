@@ -26,9 +26,9 @@ class OrderSystemFormulaVo extends BaseVo
     private $lossAmount;
     /** string 额外的倍数(合约数量，用于计算) */
     private $otherMultiple;
-    /** @var $maxLossAmount float 单笔最大亏损金额(程序计算赋值) */
+    /** @var $maxLossAmount float 单笔最大亏损金额(程序赋值) */
     private $maxLossAmount;
-    /** @var $balance float 可用余额(程序计算赋值) */
+    /** @var $balance float 可用余额(程序赋值) */
     private $balance;
 
     public function valid(): array

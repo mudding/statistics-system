@@ -12,17 +12,30 @@ use app\modules\order\validate\OrderValidate;
 
 class OrderCreateVo extends BaseVo
 {
+    /* 程序赋值 */
+    /** 关联的账户类型(程序赋值) */
+    private $accountType;
+    /** 订单Id(程序赋值)  */
+    private $id;
+    /** 订单号(程序赋值)  */
+    private $no;
+    /** 单笔最大亏损额度(程序赋值) */
+    private $maxLossAmount;
+    /** 总余额(程序赋值)  */
+    private $total;
+    /** 可用余额(程序赋值)  */
+    private $balance;
+    /** 冻结资金(程序赋值)  */
+    private $frozen;
+
+
+    /* 传参 */
     /** string 关联的账户Id */
     private $accountId;
-    /** 关联的账户类型(系统赋值) */
-    private $accountType;
+
     /** string 订单类型，1=发起单，2=节点单，3=加仓单,4=游击战 */
     private $orderType;
 
-    /** 订单Id(系统赋值)  */
-    private $orderId;
-    /** 订单号(系统赋值)  */
-    private $orderNo;
 
     /** 订单类型 == 加仓单时，关联订单Id  */
     private $orderPid;
@@ -60,7 +73,7 @@ class OrderCreateVo extends BaseVo
         return [OrderValidate::class, 'create'];
     }
 
-    public function checkOrderAdd()
+    public function checkOrderAddParameter()
     {
         if (empty($this->getOrderPid()) || empty($this->getOrderPno())) {
             throw new BizException('加仓单，关联订单id和关联订单号不能为空！');
@@ -292,6 +305,39 @@ class OrderCreateVo extends BaseVo
         $this->orderPno = $orderPno;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNo()
+    {
+        return $this->no;
+    }
+
+    /**
+     * @param mixed $no
+     */
+    public function setNo($no): void
+    {
+        $this->no = $no;
+    }
+
     /**
      * @return mixed
      */
@@ -311,33 +357,65 @@ class OrderCreateVo extends BaseVo
     /**
      * @return mixed
      */
-    public function getOrderId()
+    public function getMaxLossAmount()
     {
-        return $this->orderId;
+        return $this->maxLossAmount;
     }
 
     /**
-     * @param mixed $orderId
+     * @param mixed $maxLossAmount
      */
-    public function setOrderId($orderId): void
+    public function setMaxLossAmount($maxLossAmount): void
     {
-        $this->orderId = $orderId;
+        $this->maxLossAmount = $maxLossAmount;
     }
 
     /**
      * @return mixed
      */
-    public function getOrderNo()
+    public function getTotal()
     {
-        return $this->orderNo;
+        return $this->total;
     }
 
     /**
-     * @param mixed $orderNo
+     * @param mixed $total
      */
-    public function setOrderNo($orderNo): void
+    public function setTotal($total): void
     {
-        $this->orderNo = $orderNo;
+        $this->total = $total;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param mixed $balance
+     */
+    public function setBalance($balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFrozen()
+    {
+        return $this->frozen;
+    }
+
+    /**
+     * @param mixed $frozen
+     */
+    public function setFrozen($frozen): void
+    {
+        $this->frozen = $frozen;
     }
 
 
