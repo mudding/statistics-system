@@ -29,6 +29,25 @@ class OrderAction extends Controller
     }
 
     /**
+     * 总数据 = 账户信息+首单+加仓单
+     *
+     * @param RequestInterface $request
+     * @return Result
+     */
+    public function details(RequestInterface $request)
+    {
+        $accountId = $request->getParameter('accountId');
+        $orderId = $request->getParameter('orderId');
+        $data = $this->service->details($accountId, $orderId);
+        $extra['orderType'] = Order::ORDER_TYPE;
+        $extra['orderDirection'] = Order::ORDER_DIRECTION;
+        $extra['orderStatus'] = Order::ORDER_STATUS;
+        return Result::ok()->data($data)->extra($extra);
+    }
+
+    /**
+     * 单条订单数据 = 账户信息+单条数据
+     *
      * @param RequestInterface $request
      * @return Result
      */
@@ -43,6 +62,11 @@ class OrderAction extends Controller
         return Result::ok()->data($data)->extra($extra);
     }
 
+    /**
+     * @param OrderCreateVo $orderLogVo
+     * @return Result
+     * @throws \Throwable
+     */
     public function create(OrderCreateVo $orderLogVo)
     {
         $res = $this->service->create($orderLogVo);

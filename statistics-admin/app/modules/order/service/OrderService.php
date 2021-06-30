@@ -11,6 +11,8 @@ use app\exception\BizException;
 use app\model\entity\Account;
 use app\model\entity\Order;
 use app\model\entity\OrderRelation;
+use app\model\entity\SignalTime;
+use app\model\entity\Variety;
 use app\modules\order\dao\AccountDao;
 use app\modules\order\dao\OrderDao;
 use app\modules\order\dao\OrderRelationDao;
@@ -18,6 +20,7 @@ use app\modules\order\vo\OrderCreateVo;
 use app\modules\order\vo\OrderSystemFormulaVo;
 use app\utils\bean\BeanUtil;
 use app\utils\order\OrderHelper;
+use Carbon\Carbon;
 use framework\db\DB;
 use framework\string\StringUtils;
 use framework\util\Loader;
@@ -35,26 +38,107 @@ class OrderService
         $this->dao = Loader::singleton(OrderDao::class);
     }
 
-    public function getById($accountId, $orderId)
+    /**
+     * 总数据 = 账户信息+首单+加仓单
+     *
+     * @param $accountId
+     * @param $orderId
+     * @return mixed
+     */
+    public function details($accountId, $orderId)
     {
-        /** @var Account $account */
-        $account = AccountDao::getById($accountId);
-        $order = $this->dao->getById($orderId);
-        $data['account'] = [
-            'accountType' => $account->account_type,
-            'accountTypeName' => Account::ACCOUNT_TYPE[$account->account_type],
-            'accountName' => $account->account_name,
-            'accountNo' => $account->account_no,
-            'total' => $account->total,
-            'balance' => $account->balance,
-            'frozen' => $account->frozen,
-            'ratio' => floatval($account->ratio),
-            'rati' => floatBcuml($account->ratio, 100) . '%',
-        ];
+        $data['account'] = AccountService::getAccountToOrder($accountId);
+        /** @var Order $supOrder */
+        $supOrder = $this->dao->getById($orderId);
+        if (!empty($supOrder)) {
+            $data['supOrder'] = $this->getOrderData($supOrder);
+            //查询加仓单数据
+            $subOrder = $supOrder->orderRelation()->paginate();
+            /** @var OrderRelation $sub */
+            foreach ($subOrder as $k => $sub) {
+                $data['subOrder'][$k] = $sub->getSubOrder()->first();
+            }
+        }
         return $data;
     }
 
+    /**
+     * 单条订单数据 = 账户信息+单条数据
+     *
+     * @param $accountId
+     * @param $orderId
+     * @return mixed
+     */
+    public function getById($accountId, $orderId)
+    {
+        $data['account'] = AccountService::getAccountToOrder($accountId);
+        /** @var Order $order */
+        $order = $this->dao->getById($orderId);
+        if (!empty($order)) {
+            $data['order'] = $this->getOrderData($order);
+        }
+        return $data;
+    }
 
+    /**
+     * 统一处理订单数据
+     *
+     * @param Order $order
+     * @return array
+     */
+    private function getOrderData(Order $order)
+    {
+        /** @var Variety $variety */
+        $variety = $order->variety()->first();
+        /** @var SignalTime $signalTime */
+        $signalTime = $order->signalTime()->first();
+        return [
+            'id' => $order->getOriginal('id'),
+            'no' => $order->no,
+            'direction' => $order->direction,
+            'directionName' => Order::ORDER_DIRECTION[$order->direction],
+            'orderType' => $order->order_type,
+            'orderTypeName' => Order::ORDER_TYPE[$order->order_type],
+            'orderStatus' => $order->order_status,
+            'orderStatusName' => Order::ORDER_STATUS[$order->order_status],
+            //品种id
+            'varietyId' => $order->variety_id,
+            'varietyName' => $variety->variety_name,
+            //信号周期查询
+            'inputSignalTimeId' => $order->input_signal_time_id,
+            'inputSignalTimeName' => $signalTime->signal_time_name,
+
+            'maxLossAmount' => $order->max_loss_amount,
+            'inputHandCount' => $order->input_hand_count,
+            'inputPoint' => $order->input_point,
+            'deposit' => $order->deposit,
+            'lossPoint' => $order->loss_point,
+            'lossAmount' => $order->loss_amount,
+            'inputReason' => $order->input_reason,
+            //图片未处理
+            'inputImages' => $order->input_images,
+            'outputHandCount' => $order->output_hand_count,
+            'outputPoint' => $order->output_point,
+            'outputAmount' => $order->output_amount,
+            //平仓日志未处理
+            'outputLog' => $order->output_log,
+            'outputReason' => $order->output_reason,
+            //图片未处理
+            'outputImages' => $order->output_images,
+            'total' => $order->total,
+            'balance' => $order->balance,
+            'frozen' => $order->frozen,
+            'createdAt' => Carbon::parse($order->created_at)->toDateTimeString(),
+        ];
+    }
+
+    /**
+     * 创建订单
+     *
+     * @param OrderCreateVo $createVo
+     * @return bool
+     * @throws \Throwable
+     */
     public function create(OrderCreateVo $createVo)
     {
         /** @var Account $account */
@@ -63,6 +147,7 @@ class OrderService
         $createVo->setTotal($account->total);
         $createVo->setId(StringUtils::genGlobalUid());
         $createVo->setNo(OrderHelper::generateNumber($createVo->getOrderType()));
+        //未处理-创建订单的上传入场图片
         DB::transaction('default', function () use ($createVo, $account) {
             //1.加仓单时，订单关联表要新增
             if ($createVo->getOrderType() == Order::ORDER_TYPE_ADD) {

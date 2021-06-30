@@ -27,4 +27,9 @@ class OrderRelation extends Model
         'order_add_id',
         'order_add_no'
     ];
+
+    public function getSubOrder()
+    {
+        return $this->hasOne(Order::class, 'id', 'order_add_id');
+    }
 }

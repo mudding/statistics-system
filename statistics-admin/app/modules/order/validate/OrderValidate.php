@@ -12,7 +12,7 @@ use framework\validate\Validate;
 class OrderValidate extends Validate
 {
     protected $rule = [
-        'id' => 'require',
+        'orderId' => 'require',
         'accountId' => 'require',
         'orderType' => 'require',
         'isPlan' => 'require｜in:0,1',
@@ -32,7 +32,7 @@ class OrderValidate extends Validate
 
     //信息
     protected $message = [
-        'id.present' => 'id不能为空',
+        'orderId.present' => '订单id不能为空',
         'accountId.present' => '请输入账户Id',
         'orderType.present' => '请选择订单类型',
         'isPlan.present' => '请选择是否计划单',
@@ -66,7 +66,7 @@ class OrderValidate extends Validate
             'inputReason'
         ],
         'update' => [
-            'id',
+            'orderId',
             'accountId',
             'orderType',
             'orderStatus',

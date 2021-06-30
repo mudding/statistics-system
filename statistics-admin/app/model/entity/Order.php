@@ -9,6 +9,8 @@ namespace app\model\entity;
 
 use Carbon\Carbon;
 use framework\db\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Order
@@ -122,4 +124,19 @@ class Order extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function orderRelation(): hasMany
+    {
+        return $this->hasMany(OrderRelation::class, 'order_id', 'id');
+    }
+
+    public function variety(): hasOne
+    {
+        return $this->hasOne(Variety::class, 'id', 'variety_id');
+    }
+
+    public function signalTime(): hasOne
+    {
+        return $this->hasOne(SignalTime::class, 'id', 'input_signal_time_id');
+    }
 }

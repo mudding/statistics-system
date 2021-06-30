@@ -32,16 +32,10 @@ class OrderCreateVo extends BaseVo
     /* 传参 */
     /** string 关联的账户Id */
     private $accountId;
-
     /** string 订单类型，1=发起单，2=节点单，3=加仓单,4=游击战 */
     private $orderType;
-
-
     /** 订单类型 == 加仓单时，关联订单Id  */
     private $orderPid;
-
-
-    /** string 订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓，4=计划中，5=计划失败 */
     /** 是否计划单，1-是，0-否 */
     private $isPlan;
     /** string 交易品种Id */

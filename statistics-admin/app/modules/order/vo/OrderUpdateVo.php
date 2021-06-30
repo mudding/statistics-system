@@ -7,17 +7,43 @@
 
 namespace app\modules\order\vo;
 
+use app\exception\BizException;
 use app\modules\order\validate\OrderValidate;
 
 class OrderUpdateVo extends BaseVo
 {
+    /* 程序赋值 */
+//    /** 关联的账户类型(程序赋值) */
+//    private $accountType;
+    /** 订单Id(程序赋值)  */
     private $orderId;
-    /** string 关联的账户Id */
-    private $accountId;
-    /** string 订单类型，1=发起单，2=节点单，3=加仓单 */
-    private $orderType;
+    /** 订单号(程序赋值)  */
+    private $no;
+    /** 单笔最大亏损额度(程序赋值) */
+    private $maxLossAmount;
+    /** 总余额(程序赋值)  */
+    private $total;
+    /** 可用余额(程序赋值)  */
+    private $balance;
+    /** 冻结资金(程序赋值)  */
+    private $frozen;
+
+
+    /* 传参 */
+//    /** string 关联的账户Id */
+//    private $accountId;
+//
+//    /** string 订单类型，1=发起单，2=节点单，3=加仓单,4=游击战 */
+//    private $orderType;
+//
+//
+//    /** 订单类型 == 加仓单时，关联订单Id  */
+//    private $orderPid;
+
+
     /** string 订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓，4=计划中，5=计划失败 */
-    private $orderStatus;
+//    /** 是否计划单，1-是，0-否 */
+//    private $isPlan;
     /** string 交易品种Id */
     private $varietyId;
     /** string 入场信号周期id */
@@ -36,17 +62,8 @@ class OrderUpdateVo extends BaseVo
     private $inputReason;
     /** string 入场图片 */
     private $inputImages;
-    /** string 单条平仓手数 */
-    private $outputHandCount;
-    /** string 出场点 */
-    private $outputPoint;
-    /** string 单条平仓所得金额 */
-    private $outputAmount;
-    /** string 出场理由 */
-    private $outputReason;
-    /** string 出场图片 */
-    private $outputImages;
-
+    /** int 订单方向，1-多，0-空 */
+    private $direction;
 
     /**
      * @return array|string[]
@@ -76,49 +93,81 @@ class OrderUpdateVo extends BaseVo
     /**
      * @return mixed
      */
-    public function getAccountId()
+    public function getNo()
     {
-        return $this->accountId;
+        return $this->no;
     }
 
     /**
-     * @param mixed $accountId
+     * @param mixed $no
      */
-    public function setAccountId($accountId): void
+    public function setNo($no): void
     {
-        $this->accountId = $accountId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrderType()
-    {
-        return $this->orderType;
-    }
-
-    /**
-     * @param mixed $orderType
-     */
-    public function setOrderType($orderType): void
-    {
-        $this->orderType = $orderType;
+        $this->no = $no;
     }
 
     /**
      * @return mixed
      */
-    public function getOrderStatus()
+    public function getMaxLossAmount()
     {
-        return $this->orderStatus;
+        return $this->maxLossAmount;
     }
 
     /**
-     * @param mixed $orderStatus
+     * @param mixed $maxLossAmount
      */
-    public function setOrderStatus($orderStatus): void
+    public function setMaxLossAmount($maxLossAmount): void
     {
-        $this->orderStatus = $orderStatus;
+        $this->maxLossAmount = $maxLossAmount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param mixed $total
+     */
+    public function setTotal($total): void
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param mixed $balance
+     */
+    public function setBalance($balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFrozen()
+    {
+        return $this->frozen;
+    }
+
+    /**
+     * @param mixed $frozen
+     */
+    public function setFrozen($frozen): void
+    {
+        $this->frozen = $frozen;
     }
 
     /**
@@ -268,82 +317,17 @@ class OrderUpdateVo extends BaseVo
     /**
      * @return mixed
      */
-    public function getOutputHandCount()
+    public function getDirection()
     {
-        return $this->outputHandCount;
+        return $this->direction;
     }
 
     /**
-     * @param mixed $outputHandCount
+     * @param mixed $direction
      */
-    public function setOutputHandCount($outputHandCount): void
+    public function setDirection($direction): void
     {
-        $this->outputHandCount = $outputHandCount;
+        $this->direction = $direction;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getOutputPoint()
-    {
-        return $this->outputPoint;
-    }
-
-    /**
-     * @param mixed $outputPoint
-     */
-    public function setOutputPoint($outputPoint): void
-    {
-        $this->outputPoint = $outputPoint;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOutputAmount()
-    {
-        return $this->outputAmount;
-    }
-
-    /**
-     * @param mixed $outputAmount
-     */
-    public function setOutputAmount($outputAmount): void
-    {
-        $this->outputAmount = $outputAmount;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOutputReason()
-    {
-        return $this->outputReason;
-    }
-
-    /**
-     * @param mixed $outputReason
-     */
-    public function setOutputReason($outputReason): void
-    {
-        $this->outputReason = $outputReason;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOutputImages()
-    {
-        return $this->outputImages;
-    }
-
-    /**
-     * @param mixed $outputImages
-     */
-    public function setOutputImages($outputImages): void
-    {
-        $this->outputImages = $outputImages;
-    }
-
 
 }

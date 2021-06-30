@@ -104,5 +104,25 @@ class AccountService
         return floatBcuml($account->balance, $account->ratio);
     }
 
+    /**
+     * @param $accountId
+     * @return array
+     */
+    public static function getAccountToOrder($accountId)
+    {
+        /** @var Account $account */
+        $account = AccountDao::getById($accountId);
+        return [
+            'accountType' => $account->account_type,
+            'accountTypeName' => Account::ACCOUNT_TYPE[$account->account_type],
+            'accountName' => $account->account_name,
+            'accountNo' => $account->account_no,
+            'total' => $account->total,
+            'balance' => $account->balance,
+            'frozen' => $account->frozen,
+            'ratio' => floatval($account->ratio),
+            'rati' => floatBcuml($account->ratio, 100) . '%',
+        ];
+    }
 
 }
