@@ -83,6 +83,7 @@ CREATE TABLE `order` (
   `account_id` char(18) NOT NULL COMMENT '关联的账户Id',
   `variety_id` char(18) NOT NULL COMMENT '交易品种Id',
   `max_loss_amount` decimal(18,5) DEFAULT '0.00000' COMMENT '最大亏损金额(同个订单序号的最大亏损金额)',
+  `direction` tinyint DEFAULT '0' COMMENT '订单方向，1-多，0-空',
   `input_signal_time_id` tinyint DEFAULT '2' COMMENT '入场信号周期id',
   `input_hand_count` decimal(18,5) DEFAULT '0.00000' COMMENT '手数/仓位(单条)',
   `input_point` decimal(18,5) DEFAULT '0.00000' COMMENT '入场点数',

@@ -20,13 +20,14 @@ class OrderDao
      */
     public function create(OrderCreateVo $createVo)
     {
+        //创建订单，订单状态只能是持单中、计划中
         return Order::query()->create([
             'id' => $createVo->getId(),
             'no' => $createVo->getNo(),
             'account_id' => $createVo->getAccountId(),
             'account_type' => $createVo->getAccountType(),
             'order_type' => $createVo->getOrderType(),
-            'order_status' => $createVo->getOrderStatus(),
+            'order_status' => empty($createVo->getIsPlan()) ? Order::ORDER_STATUS_ING : Order::ORDER_STATUS_PLAN_ING,
             'variety_id' => $createVo->getVarietyId(),
             'input_signal_time_id' => $createVo->getInputSignalTimeId(),
             'input_hand_count' => $createVo->getInputHandCount(),
@@ -40,6 +41,7 @@ class OrderDao
             'total' => $createVo->getTotal(),
             'balance' => $createVo->getBalance(),
             'frozen' => $createVo->getFrozen(),
+            'direction' => $createVo->getDirection()
         ]);
     }
 

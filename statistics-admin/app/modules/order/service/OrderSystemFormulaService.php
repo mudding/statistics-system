@@ -9,12 +9,10 @@
 
 namespace app\modules\order\service;
 
-use app\exception\BizException;
 use app\model\entity\Account;
 use app\modules\order\dao\AccountDao;
 use app\modules\order\vo\OrderSystemFormulaVo;
 use app\utils\systemformula\SystemFormula;
-use framework\util\Loader;
 
 class OrderSystemFormulaService
 {
@@ -22,7 +20,7 @@ class OrderSystemFormulaService
      * @param OrderSystemFormulaVo $systemFormulaVo
      * @return int
      */
-    public function getSystemFormula(OrderSystemFormulaVo $systemFormulaVo)
+    public static function getSystemFormula(OrderSystemFormulaVo $systemFormulaVo)
     {
         /** @var Account $data */
         $data = AccountDao::getById($systemFormulaVo->getAccountId());

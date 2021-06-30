@@ -8,6 +8,7 @@ use app\modules\admin\dao\AdminUserDao;
 use app\modules\order\vo\AccountCreateVo;
 use app\modules\order\vo\AccountUpdateVo;
 use app\utils\jwt\JwtUtil;
+use Carbon\Carbon;
 use framework\db\DB;
 use framework\string\StringUtils;
 
@@ -84,5 +85,20 @@ class AccountDao
     public static function getById($id)
     {
         return Account::query()->where('id', $id)->firstOrFail();
+    }
+
+    /**
+     * @param $accountId
+     * @param $balance
+     * @param $frozen
+     * @return int
+     */
+    public static function setAccountTotal($accountId, $balance, $frozen)
+    {
+        return Account::query()->where('id', '=', $accountId)
+            ->update([
+                'balance' => $balance,
+                'frozen' => $frozen,
+            ]);
     }
 }

@@ -15,7 +15,7 @@ class OrderValidate extends Validate
         'id' => 'require',
         'accountId' => 'require',
         'orderType' => 'require',
-        'orderStatus' => 'require',
+        'isPlan' => 'require｜in:0,1',
         'varietyId' => 'require',
         'inputSignalTimeId' => 'require',
         'inputHandCount' => 'require',
@@ -35,7 +35,7 @@ class OrderValidate extends Validate
         'id.present' => 'id不能为空',
         'accountId.present' => '请输入账户Id',
         'orderType.present' => '请选择订单类型',
-        'orderStatus.present' => '请选择订单状态',
+        'isPlan.present' => '请选择是否计划单',
         'varietyId.present' => '请输入交易品种Id',
         'inputSignalTimeId.present' => '请选择入场信号周期id',
         'inputHandCount.present' => '请输入手数/仓位',
@@ -53,8 +53,36 @@ class OrderValidate extends Validate
 
     //建议方法名称对应
     protected $scene = [
-        'create' => ['accountId', 'orderType','orderStatus','varietyId','inputSignalTimeId','inputHandCount','inputPoint','deposit','lossAmount','lossPoint','inputReason'],
-        'update' => ['id', 'accountId', 'orderType','orderStatus','varietyId','inputSignalTimeId','inputHandCount','inputPoint','deposit','lossAmount','lossPoint','inputReason','outputHandCount','outputPoint','outputAmount','outputReason'],
-        'getSystemFormula' => ['accountId','inputPoint'],
-        ];
+        'create' => [
+            'accountId',
+            'orderType',
+            'varietyId',
+            'inputSignalTimeId',
+            'inputHandCount',
+            'inputPoint',
+            'deposit',
+            'lossAmount',
+            'lossPoint',
+            'inputReason'
+        ],
+        'update' => [
+            'id',
+            'accountId',
+            'orderType',
+            'orderStatus',
+            'varietyId',
+            'inputSignalTimeId',
+            'inputHandCount',
+            'inputPoint',
+            'deposit',
+            'lossAmount',
+            'lossPoint',
+            'inputReason',
+            'outputHandCount',
+            'outputPoint',
+            'outputAmount',
+            'outputReason'
+        ],
+        'getSystemFormula' => ['accountId', 'inputPoint'],
+    ];
 }

@@ -18,7 +18,7 @@ class OrderSystemFormulaVo extends BaseVo
     private $inputHandCount;
     /**  string 入场位置 */
     private $inputPoint;
-    /**  string 保证金 */
+    /**  string 本单总保证金 */
     private $deposit;
     /**  string 止损位置 */
     private $lossPoint;
@@ -26,9 +26,9 @@ class OrderSystemFormulaVo extends BaseVo
     private $lossAmount;
     /** string 额外的倍数(合约数量，用于计算) */
     private $otherMultiple;
-    /** @var $maxLossAmount float 单笔最大亏损金额(程序赋值) */
+    /**  $maxLossAmount  单笔最大亏损金额(程序赋值) */
     private $maxLossAmount;
-    /** @var $balance float 可用余额(程序赋值) */
+    /**  $balance  可用余额(程序赋值) */
     private $balance;
 
     public function valid(): array
@@ -176,36 +176,35 @@ class OrderSystemFormulaVo extends BaseVo
     }
 
     /**
-     * @return float
+     * @return mixed
      */
-    public function getMaxLossAmount(): float
+    public function getMaxLossAmount()
     {
         return $this->maxLossAmount;
     }
 
     /**
-     * @param float $maxLossAmount
+     * @param mixed $maxLossAmount
      */
-    public function setMaxLossAmount(float $maxLossAmount): void
+    public function setMaxLossAmount($maxLossAmount): void
     {
         $this->maxLossAmount = $maxLossAmount;
     }
 
     /**
-     * @return float
+     * @return mixed
      */
-    public function getBalance(): float
+    public function getBalance()
     {
         return $this->balance;
     }
 
     /**
-     * @param float $balance
+     * @param mixed $balance
      */
-    public function setBalance(float $balance): void
+    public function setBalance($balance): void
     {
         $this->balance = $balance;
     }
-
 
 }

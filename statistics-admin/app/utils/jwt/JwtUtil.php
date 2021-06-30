@@ -76,7 +76,7 @@ class JwtUtil
     {
         $adminConfig = config('admin');
 //        $token = $_COOKIE['token'] ?? '';
-        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6IjAxNjAwOTE4YTUwMzgwYzliYyIsImlwIjoiMTI3LjAuMC4xIiwiYXVkIjoiYWRtaW4iLCJpYXQiOjE2MjAyOTIzMTUsImV4cCI6MTYyMDg5NzExNX0.b-PCaztXT92eKZDFP62Ib5pE_pZJOsXsJHD3N-dvfFt3x8INZiiuq9qx2XBkr_KCJTY6uo4Q0DpSNyCIDp1F2ucY3KQ2tDyO7Yp5_gQ36hy_OxSv7ms1O-h0fgTzjWpS7vnw6YGP4dCF6vBs0WItCNTs2qrM-Qs1SGsENyJX8Yc';
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6IjAxNjAwOTE4YTUwMzgwYzliYyIsImlwIjoiMTI3LjAuMC4xIiwiYXVkIjoiYWRtaW4iLCJpYXQiOjE2MjUwMTUzNjIsImV4cCI6MTYyNTYyMDE2Mn0.l-jA93FWP-ex2rVtSlC6K-IBQZ7YOJKgur4O-Znjb2_1-xZ0BZgIiYlnOxr4jQPMBHMCuEEm491Tk_TzubJ0TRciyBtRRPm8bH-PBYHfLpD6FpHDSRUXmRJ4ZFumTlb8Gr4TmGH1BacPpBkVt0ZP1Hbs6ecPTCHRPJ4LRhUz1JA';
         return AuthMiddleWare::getUserByToken($token, $adminConfig['redis_login_user_prefix'], $adminConfig['aud']);
     }
 

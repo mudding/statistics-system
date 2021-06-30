@@ -7,11 +7,13 @@
 
 namespace app\modules\order\action;
 
+use app\model\entity\Order;
 use app\modules\order\service\OrderService;
 use app\modules\order\service\OrderSystemFormulaService;
 use app\modules\order\vo\OrderCreateVo;
 use app\modules\order\vo\OrderSystemFormulaVo;
 use framework\Controller;
+use framework\request\RequestInterface;
 use framework\util\Loader;
 use framework\util\Result;
 
@@ -26,6 +28,20 @@ class OrderAction extends Controller
         $this->service = Loader::service(OrderService::class);
     }
 
+    /**
+     * @param RequestInterface $request
+     * @return Result
+     */
+    public function getById(RequestInterface $request)
+    {
+        $accountId = $request->getParameter('accountId');
+        $orderId = $request->getParameter('orderId');
+        $data = $this->service->getById($accountId, $orderId);
+        $extra['orderType'] = Order::ORDER_TYPE;
+        $extra['orderDirection'] = Order::ORDER_DIRECTION;
+        $extra['orderStatus'] = Order::ORDER_STATUS;
+        return Result::ok()->data($data)->extra($extra);
+    }
 
     public function create(OrderCreateVo $orderLogVo)
     {
@@ -43,9 +59,7 @@ class OrderAction extends Controller
     public function getSystemFormula(OrderSystemFormulaVo $systemFormulaVo)
     {
         $systemFormulaVo->checkNotEmpty();
-        /** @var  OrderSystemFormulaService $service */
-        $service = Loader::service(OrderSystemFormulaService::class);
-        $data = $service->getSystemFormula($systemFormulaVo);
+        $data = OrderSystemFormulaService::getSystemFormula($systemFormulaVo);
         return Result::ok()->data($data);
     }
 

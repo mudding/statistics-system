@@ -9,9 +9,13 @@ use framework\lock\SynLockFactory;
 
 class OrderHelper
 {
+    /** @var string 发起单 */
     public const PREFIX_FQ = 'FQ';
+    /** @var string 节点单 */
     public const PREFIX_JD = 'JD';
+    /** @var string 加仓单 */
     public const PREFIX_JC = 'JC';
+    /** @var string 游击战单 */
     public const PREFIX_YJZ = 'YJZ';
 
     /** @var string[] 订单号前缀 */
@@ -32,6 +36,7 @@ class OrderHelper
      */
     public static function generateNumber(int $orderType, $numberFormat = '%05d', $dateFormat = 'ymd'): string
     {
+        $str = '';
         $lock = SynLockFactory::getFileSynLock('order-number');
         $lock->tryLock();
         try {
@@ -40,14 +45,14 @@ class OrderHelper
                 ->where('created_at', '>', date('Y-m-d 00:00:00'))
                 ->where('order_type', $orderType)
                 ->count();
-            $str = Carbon::now()->format($dateFormat) . sprintf($numberFormat, $count + 1);
+            $str = Carbon::now()->format($dateFormat) . '_' . sprintf($numberFormat, $count + 1);
         } catch (\Exception $e) {
             $lock->unLock();
             throw new BizException($e->getMessage());
         } finally {
             $lock->unlock();
         }
-        return $prefix . $str;
+        return $prefix . '_' . $str;
     }
 
 }

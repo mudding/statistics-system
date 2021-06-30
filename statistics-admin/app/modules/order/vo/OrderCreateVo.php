@@ -43,7 +43,8 @@ class OrderCreateVo extends BaseVo
     private $orderPno;
 
     /** string 订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓，4=计划中，5=计划失败 */
-    private $orderStatus;
+    /** 是否计划单，1-是，0-否 */
+    private $isPlan;
     /** string 交易品种Id */
     private $varietyId;
     /** string 入场信号周期id */
@@ -62,6 +63,8 @@ class OrderCreateVo extends BaseVo
     private $inputReason;
     /** string 入场图片 */
     private $inputImages;
+    /** int 订单方向，1-多，0-空 */
+    private $direction;
 
 
     /**
@@ -111,22 +114,6 @@ class OrderCreateVo extends BaseVo
     public function setOrderType($orderType): void
     {
         $this->orderType = $orderType;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrderStatus()
-    {
-        return $this->orderStatus;
-    }
-
-    /**
-     * @param mixed $orderStatus
-     */
-    public function setOrderStatus($orderStatus): void
-    {
-        $this->orderStatus = $orderStatus;
     }
 
     /**
@@ -418,5 +405,38 @@ class OrderCreateVo extends BaseVo
         $this->frozen = $frozen;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDirection()
+    {
+        return $this->direction;
+    }
+
+    /**
+     * @param mixed $direction
+     */
+    public function setDirection($direction): void
+    {
+        $this->direction = $direction;
+    }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getIsPlan()
+    {
+        return $this->isPlan;
+    }
+
+    /**
+     * @param mixed $isPlan
+     */
+    public function setIsPlan($isPlan): void
+    {
+        $this->isPlan = $isPlan;
+    }
 
 }
