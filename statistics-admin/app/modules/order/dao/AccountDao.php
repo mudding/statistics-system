@@ -93,7 +93,7 @@ class AccountDao
      * @param $frozen
      * @return int
      */
-    public static function setAccountTotal($accountId, $balance, $frozen)
+    public static function setAccountBalanceFrozen($accountId, $balance, $frozen)
     {
         return Account::query()->where('id', '=', $accountId)
             ->update([

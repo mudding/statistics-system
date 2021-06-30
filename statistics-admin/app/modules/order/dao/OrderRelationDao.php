@@ -12,6 +12,13 @@ use framework\string\StringUtils;
 
 class OrderRelationDao
 {
+    /**
+     * @param $orderPid
+     * @param $orderPno
+     * @param $orderAddId
+     * @param $orderAddNo
+     * @return bool
+     */
     public static function create($orderPid, $orderPno, $orderAddId, $orderAddNo)
     {
         return OrderRelation::query()->insert([

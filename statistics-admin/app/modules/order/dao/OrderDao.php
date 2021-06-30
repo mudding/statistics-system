@@ -45,10 +45,23 @@ class OrderDao
         ]);
     }
 
+    /**
+     * @param $accountId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public static function searchOrderByAccountId($accountId)
     {
         return Order::query()->where('account_id', $accountId)
             ->whereIn('order_status', [Order::ORDER_STATUS_ING, Order::ORDER_STATUS_CLOSE_SOME])
             ->paginate();
+    }
+
+    /**
+     * @param $orderId
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getById($orderId)
+    {
+        return Order::query()->where('id', $orderId)->first();
     }
 }

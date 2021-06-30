@@ -39,8 +39,7 @@ class OrderCreateVo extends BaseVo
 
     /** 订单类型 == 加仓单时，关联订单Id  */
     private $orderPid;
-    /** 订单类型 == 加仓单时，关联订单No  */
-    private $orderPno;
+
 
     /** string 订单状态,1=持单中,2=平仓一部分,3=该条数据全部平仓，4=计划中，5=计划失败 */
     /** 是否计划单，1-是，0-否 */
@@ -78,11 +77,10 @@ class OrderCreateVo extends BaseVo
 
     public function checkOrderAddParameter()
     {
-        if (empty($this->getOrderPid()) || empty($this->getOrderPno())) {
-            throw new BizException('加仓单，关联订单id和关联订单号不能为空！');
+        if (empty($this->getOrderPid())) {
+            throw new BizException('加仓单，关联订单id不能为空！');
         }
     }
-
 
     /**
      * @return mixed
@@ -276,22 +274,6 @@ class OrderCreateVo extends BaseVo
         $this->orderPid = $orderPid;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOrderPno()
-    {
-        return $this->orderPno;
-    }
-
-    /**
-     * @param mixed $orderPno
-     */
-    public function setOrderPno($orderPno): void
-    {
-        $this->orderPno = $orderPno;
-    }
-
 
     /**
      * @return mixed
@@ -420,7 +402,6 @@ class OrderCreateVo extends BaseVo
     {
         $this->direction = $direction;
     }
-
 
 
     /**

@@ -39,6 +39,7 @@ class OrderService
     {
         /** @var Account $account */
         $account = AccountDao::getById($accountId);
+        $order = $this->dao->getById($orderId);
         $data['account'] = [
             'accountType' => $account->account_type,
             'accountTypeName' => Account::ACCOUNT_TYPE[$account->account_type],
@@ -60,31 +61,47 @@ class OrderService
         $account = AccountDao::getById($createVo->getAccountId());
         $createVo->setAccountType($account->account_type);
         $createVo->setTotal($account->total);
-        $createVo->setMaxLossAmount(floatBcuml($account->balance, $account->ratio));
         $createVo->setId(StringUtils::genGlobalUid());
         $createVo->setNo(OrderHelper::generateNumber($createVo->getOrderType()));
         DB::transaction('default', function () use ($createVo, $account) {
             //1.加仓单时，订单关联表要新增
             if ($createVo->getOrderType() == Order::ORDER_TYPE_ADD) {
-                $this->addSubOrder($createVo);
+                $createVo->checkOrderAddParameter();
+                //关联订单的剩余可用止损金额 设置为加仓单的最大亏损金额
+                /** @var Order $superOrder */
+                $superOrder = $this->dao->getById($createVo->getOrderPid());
+                $surplusLossAmount = floatBcsub($superOrder->max_loss_amount, $superOrder->loss_amount);
+                $createVo->setMaxLossAmount($surplusLossAmount);
+                OrderRelationDao::create($createVo->getOrderPid(), $superOrder->no, $createVo->getId(),
+                    $createVo->getNo());
+                //加仓单只冻结加仓单的总保证金，因为首单的冻结的最大亏损金额，包含了加仓单的止损金额，无需再次冻结
+                list($balance, $frozen) = $this->getBalanceAndFrozen($account, 0,
+                    $createVo->getDeposit());
             } else {
-                //新单子的仓位、止损位置
-                $systemFormula = $this->getSuperOrderSystemFormula($createVo);
-                (empty($createVo->getInputHandCount())) ? $createVo->setInputHandCount($systemFormula) : $createVo->setLossPoint($systemFormula);
+                $createVo->setMaxLossAmount(floatBcuml($account->balance, $account->ratio));
+                //首单的可用余额、冻结资金
+                list($balance, $frozen) = $this->getBalanceAndFrozen($account, $createVo->getMaxLossAmount(),
+                    $createVo->getDeposit());
             }
-            //3.处理账户的资金,赋值总余额、可用余额、冻结余额
-            list($balance, $frozen) = $this->getBalanceAndFrozen($account, $createVo->getMaxLossAmount(),
-                $createVo->getDeposit());
-            AccountDao::setAccountTotal($account->getOriginal('id'), $balance, $frozen);
+            //系统计算的仓位 or 止损位置
+            $systemFormula = $this->getOrderSystemFormula($createVo);
+            (empty($createVo->getInputHandCount())) ? $createVo->setInputHandCount($systemFormula) : $createVo->setLossPoint($systemFormula);
+            AccountDao::setAccountBalanceFrozen($account->getOriginal('id'), $balance, $frozen);
             $createVo->setBalance($balance);
             $createVo->setFrozen($frozen);
-            //新增订单
             $this->dao->create($createVo);
         });
         return true;
     }
 
-    private function getSuperOrderSystemFormula($vo)
+
+    /**
+     * 获取单子的仓位、止损位置
+     *
+     * @param $vo
+     * @return int
+     */
+    private function getOrderSystemFormula($vo)
     {
         //新单子的仓位
         $arr = BeanUtil::transToMap($vo);
@@ -98,8 +115,15 @@ class OrderService
         return $systemFormula;
     }
 
-
-    private function getBalanceAndFrozen(Account $account, $maxLossAmount, $orderDeposit)
+    /**
+     * 根据最大亏损金额、总保证金，获取可用余额、冻结资金
+     *
+     * @param Account $account       账户信息
+     * @param float   $maxLossAmount 最大亏损金额
+     * @param float   $orderDeposit  总保证金
+     * @return array
+     */
+    private function getBalanceAndFrozen(Account $account, float $maxLossAmount, float $orderDeposit)
     {
         $accountTotal = floatBcadd($account->balance, $account->frozen);
         //可用余额 = （账户可用余额-单笔最大亏损金额-总保证金）
@@ -111,22 +135,6 @@ class OrderService
             throw new BizException('总金额 != (可用余额+冻结资金)。请核实账户资金！');
         }
         return [$balance, $frozen];
-    }
-
-
-    private function addSubOrder(OrderCreateVo $createVo)
-    {
-        //查询账户，赋值余额
-
-        //查询加仓的订单，获取最大止损金额，判断止损金额参数，风控
-        //风控，计算加仓的仓位、亏损资金，是否在主订单最大亏损金额内，设置止损金额/最大止损金额/余额
-//关联订单id/no,不能为空
-        $createVo->checkOrderAddParameter();
-        //新增关联数据
-        OrderRelationDao::create($createVo->getOrderPid(),
-            $createVo->getOrderPno(),
-            $createVo->getId(),
-            $createVo->getNo());
     }
 
 
