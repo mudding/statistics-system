@@ -93,3 +93,14 @@ if (! function_exists('floatBcuml')) {
 }
 
 
+/**
+ * 获取当前域名包括http
+ */
+if (!function_exists('getDomain')) {
+    function getDomain()
+    {
+        $httpType = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
+        $httpHost = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+        return $httpType . $httpHost;
+    }
+}

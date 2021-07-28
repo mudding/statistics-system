@@ -10,6 +10,7 @@ define('APP_PATH', BASE_PATH . '/app');
 define('CONFIG_PATH', BASE_PATH . '/config');
 define('CORE_PATH', BASE_PATH . '/core');
 define('RUNTIME_PATH', BASE_PATH . '/runtime');
+define('UPLOAD_PATH', BASE_PATH . '/upload');
 define('ENV_CFG', 'dev');
 define('TIME_ZONE', 'PRC');
 //分布式ID生成
